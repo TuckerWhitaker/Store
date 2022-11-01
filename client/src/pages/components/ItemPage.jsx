@@ -1,7 +1,8 @@
 import "./ItemPage.css"
 import SlideShow from "./SlideShow";
 function Item() {
-    return ( <div className="ItemPage" id="ItemPage">
+    return ( <div className="ItemPageParent" id="ItemPageParent">
+      <div className="ItemPage" id="ItemPage">
     <div className="ImageColumn">
       <SlideShow/>
     </div>
@@ -23,8 +24,11 @@ function Item() {
       
       
     </div>
-    <div className="AddCartParent"><button className="OptionAddCart">Add To Cart</button></div>
+    <div className="AddCartParent"><button className="OptionAddCart">Add To Cart</button>
+    </div>
+    <div className="ExitButton" onClick={()=>{document.getElementById("ItemPageParent").style.display = "none"}}>X</div>
     
+  </div>
   </div>);
 }
 

@@ -1,0 +1,12 @@
+.AdminPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 95vh;
+    background-color: rgb(222, 222, 222);
+}
+
+.AdminInput{
+    width: 30%;
+}

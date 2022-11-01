@@ -1,7 +1,7 @@
 import "./App.css";
 import Main from "./pages/Main.js";
 import Navbar from "./pages/Navbar";
-
+import AdminPage from "./pages/AdminPage";
 function App() {
   return (
     <div className="App">
@@ -10,7 +10,7 @@ function App() {
         href="https://fonts.googleapis.com/css?family=Abhaya Libre"
       />
       <Navbar></Navbar>
-      <Main></Main>
+      <AdminPage></AdminPage>
     </div>
   );
 }

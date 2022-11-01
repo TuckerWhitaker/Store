@@ -3,7 +3,7 @@ function Item() {
     <div
       className="Item"
       onClick={() => {
-        document.getElementById("ItemPage").style.display = "flex";
+        document.getElementById("ItemPageParent").style.display = "flex";
       }}
     >
       <div>Kosher Dill Pickles</div>
