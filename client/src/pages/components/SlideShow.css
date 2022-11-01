@@ -1,0 +1,24 @@
+.SlideShowParent{
+    
+}
+
+.ButtonParent{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.SlideShowImage{
+    width: 200px;
+    height: 100%;
+}
+
+.SlideBtn{
+
+    background-color: transparent;
+    border-radius: 20px;
+    border-color: transparent;
+}
+.SlideBtn:hover{
+    cursor: pointer;
+}

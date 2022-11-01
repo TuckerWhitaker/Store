@@ -1,0 +1,17 @@
+.Main{
+    display: flex;
+    width: 100vw;
+    height: 95vh;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    columns: 3;
+
+    font-family: 'Abhaya Libre';font-size: 22px;
+
+    
+}
+
+.Parent{
+    display: flex;
+    flex-direction: column;
+}
