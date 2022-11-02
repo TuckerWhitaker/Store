@@ -1,12 +1,29 @@
 .AdminPage{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: top;
     width: 100vw;
     height: 95vh;
     background-color: rgb(222, 222, 222);
 }
 
-.AdminInput{
-    width: 30%;
+.AdminInParent{
+    margin: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#description{
+    height: 10vh;
+    text-align: start;
+    resize: none;
+}
+
+.AdminOptionContainer{
+    background-color: rgb(167, 167, 167);
+    height: 20vh;
+    width: 10vw;
+    margin: 10px;
 }
