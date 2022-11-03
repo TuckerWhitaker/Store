@@ -26,4 +26,11 @@
     height: 20vh;
     width: 10vw;
     margin: 10px;
+    overflow-y: scroll;
+}
+
+.AdminOption{
+    width: 100%;
+    background-color: rgb(200, 200, 200);
+    border-color: transparent;
 }
