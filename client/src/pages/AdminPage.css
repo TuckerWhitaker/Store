@@ -1,7 +1,8 @@
 .AdminPage{
     display: flex;
-    flex-direction: column;
-    align-items: top;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     width: 100vw;
     height: 95vh;
     background-color: rgb(222, 222, 222);
@@ -15,22 +16,58 @@
 
 }
 
+.AdminColumn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #description{
-    height: 10vh;
+    height: 15vh;
     text-align: start;
     resize: none;
 }
 
+.AdminInput{
+    width: 30vw;
+    height: 5vh;
+    font-size: 3vh;
+}
+
+.AdminBtn{
+    width: 30vw;
+    height: 5vh;
+    font-size: 3vh;
+    margin: 5px;
+}
+
+.AdminBtn:hover{
+    cursor: pointer;
+}
+
+.AdminLabel{
+    font-size: 3.5vh;
+}
+
 .AdminOptionContainer{
     background-color: rgb(167, 167, 167);
+    height: 25vh;
+    width: 30vw;
+    margin: 10px;
+    overflow-y: scroll;
+}
+.AdminValueContainer{
+    background-color: rgb(167, 167, 167);
     height: 20vh;
-    width: 10vw;
+    width: 30vw;
     margin: 10px;
     overflow-y: scroll;
 }
 
 .AdminOption{
+    font-size: 3vh;
     width: 100%;
+    height: 20%;
     background-color: rgb(200, 200, 200);
     border-color: transparent;
 }

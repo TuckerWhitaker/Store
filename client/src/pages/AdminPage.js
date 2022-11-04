@@ -7,6 +7,9 @@ let CurrentOption;
 function AdminPage() {
   const [OptionName, SetOptionName] = useState("");
   const [ValueName, SetValueName] = useState("");
+  const [ItemName, SetItemName] = useState("");
+  const [ItemDescription, SetDescription] = useState("");
+  const [Price, SetPrice] = useState();
 
   const SetValueList = (OptionID) => {
     OptionID = OptionID.id;
@@ -31,6 +34,7 @@ function AdminPage() {
     CurrentOptionValues[OptionID].push(ValueName);
     let v = document.createElement("div");
     v.innerHTML = ValueName;
+    v.className = "AdminOption";
     document.getElementById("CurrentValues").appendChild(v);
   };
 
@@ -58,19 +62,39 @@ function AdminPage() {
 
   return (
     <div className="AdminPage">
-      <div className="AdminInParent">
-        <label className="AdminLabel">Name: </label>
-        <input className="AdminInput"></input>
+      <div className="AdminColumn">
+        <div className="AdminInParent">
+          <label className="AdminLabel">Name: </label>
+          <input
+            className="AdminInput"
+            onChange={(e) => {
+              SetItemName(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="AdminInParent">
+          <label className="AdminLabel">Description: </label>
+          <textarea
+            className="AdminInput"
+            id="description"
+            onChange={(e) => {
+              SetDescription(e.target.value);
+            }}
+          ></textarea>
+        </div>
+        <div className="AdminInParent">
+          <label className="AdminLabel">Price: </label>
+          <input
+            type="number"
+            className="AdminInput"
+            onChange={(e) => {
+              SetPrice(e.target.value);
+            }}
+          ></input>
+        </div>
+        <button className="AdminBtn">Create Item</button>
       </div>
-      <div className="AdminInParent">
-        <label className="AdminLabel">Description: </label>
-        <textarea className="AdminInput" id="description"></textarea>
-      </div>
-      <div className="AdminInParent">
-        <label className="AdminLabel">Price: </label>
-        <input type="number" className="AdminInput"></input>
-      </div>
-      <div className="AdminInParent">
+      <div className="AdminColumn">
         <div className="AdminOptionContainer" id="AdminOptionContainer"></div>
         <input
           className="AdminInput"
@@ -82,9 +106,11 @@ function AdminPage() {
           onClick={() => {
             AddOption();
           }}
+          className="AdminBtn"
         >
           Add Option
         </button>
+        <div className="AdminValueContainer" id="CurrentValues"></div>
         <input
           className="AdminInput"
           onChange={(e) => {
@@ -95,11 +121,10 @@ function AdminPage() {
           onClick={() => {
             AddToValueList(CurrentOption);
           }}
+          className="AdminBtn"
         >
           Add Value to Selected Option
         </button>
-        <h5>CurrentOption Values:</h5>
-        <div id="CurrentValues"></div>
       </div>
     </div>
   );
