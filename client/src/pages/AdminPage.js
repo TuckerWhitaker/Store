@@ -23,6 +23,7 @@ function AdminPage() {
       for (let i = 0; i < CurrentOptionValues[OptionID].length; i++) {
         let v = document.createElement("div");
         v.innerHTML = CurrentOptionValues[OptionID][i];
+        v.className = "AdminOption";
         document.getElementById("CurrentValues").appendChild(v);
       }
     }

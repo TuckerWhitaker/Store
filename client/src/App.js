@@ -10,7 +10,7 @@ function App() {
         href="https://fonts.googleapis.com/css?family=Abhaya Libre"
       />
       <Navbar></Navbar>
-      <AdminPage></AdminPage>
+      <AdminPage />
     </div>
   );
 }
