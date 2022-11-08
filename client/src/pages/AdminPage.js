@@ -1,6 +1,6 @@
 import "./AdminPage.css";
 import React, { useState } from "react";
-
+import axios, { Axios } from "axios";
 let CurrentOptionValues = [];
 let CurrentOption;
 
@@ -93,7 +93,16 @@ function AdminPage() {
             }}
           ></input>
         </div>
-        <button className="AdminBtn">Create Item</button>
+        <button
+          className="AdminBtn"
+          onClick={() => {
+            axios.post("http://localhost:3001/test").then((response) => {
+              alert(response.data);
+            });
+          }}
+        >
+          Create Item
+        </button>
       </div>
       <div className="AdminColumn">
         <div className="AdminOptionContainer" id="AdminOptionContainer"></div>
