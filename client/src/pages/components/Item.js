@@ -6,7 +6,7 @@ function Item() {
         document.getElementById("ItemPageParent").style.display = "flex";
       }}
     >
-      <div>Kosher Dill Pickles</div>
+      <div id="itemprevname">Kosher Dill Pickles</div>
       <img
         className="Image"
         src="https://cdn.gardengrocer.com/attachments/photos/big/905.jpg?8318"

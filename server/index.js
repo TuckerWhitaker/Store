@@ -62,7 +62,18 @@ app.post("/api/CreateItem", (req, res) => {
   });
 });
 
-app.post("/api/GetItems", (req, res) => {
+app.post("/api/GetItems", async (req, res) => {
+  MongoClient.connect(url, async function (err, db) {
+    var dbo = db.db("store");
+    const items = dbo.collection("items").find();
+    var itemlist = [];
+    await items.forEach((element) => {
+      itemlist.push(element);
+    });
+    res.send(itemlist);
+    console.log(itemlist);
+  });
+
   //get all items with requirements
 });
 
