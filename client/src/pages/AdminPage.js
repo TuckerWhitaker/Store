@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios, { Axios } from "axios";
 let CurrentOptionValues = [];
 let CurrentOption;
+let optionnames = [];
 
 function AdminPage() {
   const [OptionName, SetOptionName] = useState("");
@@ -44,6 +45,9 @@ function AdminPage() {
     var option = document.createElement("button");
     option.className = "AdminOption";
     option.innerHTML = OptionName;
+    optionnames.push(OptionName);
+    console.log("optionNames: ");
+    console.log(optionnames);
     option.id = document.getElementById(
       "AdminOptionContainer"
     ).childElementCount;
@@ -96,9 +100,20 @@ function AdminPage() {
         <button
           className="AdminBtn"
           onClick={() => {
-            axios.post("http://localhost:3001/test").then((response) => {
-              alert(response.data);
-            });
+            console.log(optionnames);
+            axios
+              .post("http://localhost:3001/api/CreateItem", {
+                name: ItemName,
+                description: ItemDescription,
+                price: Price,
+                options: CurrentOptionValues,
+                optionNames: optionnames,
+              })
+              .then((response) => {
+                if (response == "success") {
+                  alert("success!");
+                }
+              });
           }}
         >
           Create Item

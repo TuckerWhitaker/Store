@@ -5,6 +5,20 @@ const express = require("express");
 const app = express();
 const port = 3001;
 
+var MongoClient = require("mongodb").MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function (err, db) {
+  if (err) throw err;
+  var dbo = db.db("store");
+
+  /* dbo.collection("items").findOne({}, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });*/
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,7 +37,29 @@ app.post("/test", (req, res) => {
 });
 
 app.post("/api/CreateItem", (req, res) => {
+  console.log("create item called");
   //insert item info into db and send response on sucess/failure
+
+  MongoClient.connect(url, function (err, db) {
+    var item = {
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      options: req.body.options,
+      optionNames: req.body.optionNames,
+    };
+
+    console.log(item);
+
+    if (err) throw err;
+    var dbo = db.db("store");
+    dbo.collection("items").insertOne(item, function (err, result) {
+      if (err) throw err;
+      console.log("1 document inserted");
+      res.send("success");
+      db.close();
+    });
+  });
 });
 
 app.post("/api/GetItems", (req, res) => {
