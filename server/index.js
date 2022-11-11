@@ -73,8 +73,6 @@ app.post("/api/GetItems", async (req, res) => {
     res.send(itemlist);
     console.log(itemlist);
   });
-
-  //get all items with requirements
 });
 
 app.post("/api/OrderItem", (req, res) => {

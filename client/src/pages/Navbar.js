@@ -6,6 +6,7 @@ function Navbar() {
       <button className="NavBarButton">button</button>
       <button className="NavBarButton">button</button>
       <button className="NavBarButton">button</button>
+      <button className="NavBarCart">cart</button>
     </div>
   );
 }

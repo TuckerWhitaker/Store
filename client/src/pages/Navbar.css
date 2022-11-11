@@ -23,3 +23,19 @@
 .NavBarButton:hover{
     background-color: #4a4ab6;
 }
+
+.NavBarCart{
+    margin-left: 65vw;
+    width: 10%;
+    height: 90%;
+    background-color: #6d6dd6;
+    color: white;
+    border-style: initial;
+    border-radius: 1px;
+    transition-duration: 500ms;
+    font-family: 'Abhaya Libre';font-size: 22px;
+}
+
+.NavBarCart:hover{
+    background-color: #4a4ab6;
+}
