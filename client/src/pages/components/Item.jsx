@@ -6,7 +6,7 @@ function Item(props) {
         document.getElementById("ItemPageParent").style.display = "flex";
       }}
     >
-      <div id="itemprevname">{props.ItemInfo}</div>
+      <div id="itemprevname">{props.ItemInfo.name}</div>
       <img
         className="Image"
         src="https://cdn.gardengrocer.com/attachments/photos/big/905.jpg?8318"
