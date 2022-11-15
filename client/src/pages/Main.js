@@ -11,6 +11,7 @@ import Test from "./components/test";
 
 function Main() {
   const [ItemList, SetItemList] = useState([]);
+  const [OptionList, SetOptionList] = useState([]);
 
   const GetItemList = () => {
     axios.post("http://localhost:3001/api/GetItems").then((response) => {
@@ -27,11 +28,17 @@ function Main() {
     <div className="Parent">
       <div className="Main" id="Main">
         {ItemList.map((info, index) => {
-          return <Item key={index} ItemInfo={info}></Item>;
+          return (
+            <Item
+              key={index}
+              ItemInfo={info}
+              SetOptionList={SetOptionList}
+            ></Item>
+          );
         })}
       </div>
 
-      <ItemPage />
+      <ItemPage id="itempage" OptionList={OptionList} />
     </div>
   );
 }

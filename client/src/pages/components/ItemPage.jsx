@@ -1,6 +1,8 @@
 import "./ItemPage.css"
 import SlideShow from "./SlideShow";
-function Item() {
+function ItemPage(props) {
+
+
 
     return ( <div className="ItemPageParent" id="ItemPageParent">
       <div className="ItemPage" id="ItemPage">
@@ -9,20 +11,28 @@ function Item() {
     </div>
 
     <div className="InfoColumn">
-      <div className="ItemPageName">Pickles</div>
-      <div className="ItemPageDescription">
-        These are delicious Vlasic Kosher Dill Pickle Spears
+      <div className="ItemPageName" id="ItemPageName"></div>
+      <div className="ItemPageDescription" id="ItemPageDescription">
       </div>
-      <div className="Option">
+      <div className="OptionContainer">
+      {props.OptionList.map((info, index)=>{
 
-        <div className="OptionTitle">Size</div>
+        return(<div className="Option" key={index}>
+
+        <div key={index} className="OptionTitle">{info[0]}</div>
 
       <select className="OptionSelect">
-        <option>32 oz</option>
-        <option>16 oz</option>
+        {props.OptionList[index].map((info, index2)=>{
+
+          return(<option key={index2}>{info}</option>)
+        })}
+
       </select>
+      </div>)
+
+
+      })}
       </div>
-      
       
     </div>
     <div className="AddCartParent"><button className="OptionAddCart">Add To Cart</button>
@@ -33,4 +43,4 @@ function Item() {
   </div>);
 }
 
-export default Item;
+export default ItemPage;

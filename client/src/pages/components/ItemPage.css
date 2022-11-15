@@ -59,6 +59,7 @@
 .InfoColumn{
     display: flex;
     flex-direction: column;
+    width: 100%;
 
 }
 
@@ -77,6 +78,11 @@
     
 }
 
+
+.OptionContainer{
+    overflow-y: scroll;
+    height: 50%;
+}
 
 .Option{
     display: flex;
@@ -104,7 +110,7 @@
     width: 10rem;
     height: 2rem;
     margin-left: -200%;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     background-color: #3a3aa4;
     color: white;
     border: none;
