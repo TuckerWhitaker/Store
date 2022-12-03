@@ -36,10 +36,9 @@ function Main() {
 					);
 				})}
 			</div>
-
-			<ItemPage id="itempage" OptionList={OptionList} />
 		</div>
 	);
+	/*<ItemPage id="itempage" OptionList={OptionList} /> */
 }
 
 export default Main;

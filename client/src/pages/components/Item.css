@@ -1,0 +1,9 @@
+.Item {
+	margin: 3vw;
+	width: 50vw;
+	height: 30vh;
+}
+
+.ItemImage {
+	width: max-content;
+}

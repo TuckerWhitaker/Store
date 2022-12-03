@@ -1,0 +1,72 @@
+.CreateItemPage {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 95vh;
+	background-color: rgb(222, 222, 222);
+}
+
+.CreateItemInParent {
+	margin: 2vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.CreateItemColumn {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#description {
+	height: 15vh;
+	text-align: start;
+	resize: none;
+}
+
+.CreateItemInput {
+	width: 30vw;
+	height: 5vh;
+	font-size: 3vh;
+}
+
+.CreateItemBtn {
+	width: 30vw;
+	height: 5vh;
+	font-size: 3vh;
+	margin: 5px;
+}
+
+.CreateItemBtn:hover {
+	cursor: pointer;
+}
+
+.CreateItemLabel {
+	font-size: 3.5vh;
+}
+
+.CreateItemOptionContainer {
+	background-color: rgb(167, 167, 167);
+	height: 25vh;
+	width: 30vw;
+	margin: 10px;
+	overflow-y: scroll;
+}
+.CreateItemValueContainer {
+	background-color: rgb(167, 167, 167);
+	height: 20vh;
+	width: 30vw;
+	margin: 10px;
+	overflow-y: scroll;
+}
+
+.CreateItemOption {
+	font-size: 3vh;
+	width: 100%;
+	height: 20%;
+	background-color: rgb(200, 200, 200);
+	border-color: transparent;
+}

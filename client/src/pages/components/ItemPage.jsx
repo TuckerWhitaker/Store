@@ -8,7 +8,7 @@ function ItemPage() {
 				<div className="ItemPrice">Price</div>
 			</div>
 			<img
-				className="Image"
+				className="ItemPageImage"
 				src="https://m.media-amazon.com/images/I/71BnqTCnBRL._AC_UX679_.jpg"
 				alt="Italian Trulli"
 			/>

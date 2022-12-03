@@ -11,7 +11,7 @@ function App() {
 				href="https://fonts.googleapis.com/css?family=Abhaya Libre"
 			/>
 			<Navbar></Navbar>
-			<ItemPage></ItemPage>
+			<Main></Main>
 		</div>
 	);
 }
