@@ -1,6 +1,12 @@
 import "./ItemPage.css";
-import Option from "./Option";
+import React, { useEffect } from "react";
+
 function ItemPage() {
+	useEffect(() => {
+		setTimeout(() => {
+			Accordian();
+		}, 1000);
+	});
 	return (
 		<div className="ItemPage">
 			<div className="Iteminfo">
@@ -13,10 +19,39 @@ function ItemPage() {
 				alt="Italian Trulli"
 			/>
 			<div>
-				<Option />
+				<button className="accordion">Option: CurrentSelectedValue</button>
+				<div className="panel">
+					<button className="ItemPageBtn">Value</button>
+					<button className="ItemPageBtn">Value</button>
+					<button className="ItemPageBtn">Value</button>
+				</div>
 			</div>
+			<button
+				onClick={() => {
+					Accordian();
+				}}
+			>
+				CLICK for accordians to work
+			</button>
 		</div>
 	);
 }
+
+const Accordian = () => {
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+
+	for (i = 0; i < acc.length; i++) {
+		acc[i].addEventListener("click", function () {
+			this.classList.toggle("active");
+			var panel = this.nextElementSibling;
+			if (panel.style.maxHeight) {
+				panel.style.maxHeight = null;
+			} else {
+				panel.style.maxHeight = panel.scrollHeight + "px";
+			}
+		});
+	}
+};
 
 export default ItemPage;
