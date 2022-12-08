@@ -12,13 +12,13 @@ function Item(props) {
 				props.SetOptionList(props.ItemInfo.options);
 			}}
 		>
-			<div id="itemprevname">{props.ItemInfo.name}</div>
-			<div id="itemprevprice">${props.ItemInfo.price}</div>
 			<img
 				className="ItemImage"
 				src="https://cdn.gardengrocer.com/attachments/photos/big/905.jpg?8318"
 				alt="Italian Trulli"
 			></img>
+			<div id="itemprevname">{props.ItemInfo.name}</div>
+			<div id="itemprevprice">${props.ItemInfo.price}</div>
 		</div>
 	);
 }
