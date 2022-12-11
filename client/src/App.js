@@ -13,7 +13,7 @@ function App() {
 				href="https://fonts.googleapis.com/css?family=Abhaya Libre"
 			/>
 			<Navbar></Navbar>
-			<CartPage></CartPage>
+			<ItemPage></ItemPage>
 		</div>
 	);
 }
