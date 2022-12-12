@@ -1,7 +1,7 @@
 .ItemPage {
 	overflow-x: hidden;
 	width: 100%;
-	height: 150vh;
+	height: fit-content;
 	display: flex;
 	margin-top: 2vh;
 	align-items: center;
@@ -59,4 +59,19 @@
 	width: 20vw;
 	height: 100%;
 	margin: 5px;
+}
+
+.ItemPageBtn {
+	width: 25vh;
+	height: 5vh;
+	margin-top: 1vh;
+	background-color: rgb(155, 101, 36);
+	border-color: rgb(200, 145, 78);
+	color: rgb(255, 255, 255);
+}
+
+.ItemPageBtn:hover {
+	background-color: rgb(255, 255, 255);
+	border-color: rgb(200, 145, 78);
+	color: rgb(155, 101, 36);
 }
