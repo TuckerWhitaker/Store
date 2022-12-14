@@ -4,6 +4,12 @@ import Navbar from "./pages/Navbar";
 import AdminPage from "./pages/AdminPage";
 import ItemPage from "./pages/components/ItemPage";
 import CartPage from "./pages/components/CartPage";
+import {
+	useParams,
+	BrowserRouter as Router,
+	Routes,
+	Route,
+} from "react-router-dom";
 
 function App() {
 	return (
@@ -12,8 +18,14 @@ function App() {
 				rel="stylesheet"
 				href="https://fonts.googleapis.com/css?family=Abhaya Libre"
 			/>
-			<Navbar></Navbar>
-			<ItemPage></ItemPage>
+			<Router>
+				<Routes>
+					<Route path="/" element={<Main />} />
+					<Route path="/Cart" element={<CartPage />} />
+					<Route path="/Admin" element={<AdminPage />} />
+					<Route path="/item/:ItemId" element={<ItemPage />} />
+				</Routes>
+			</Router>
 		</div>
 	);
 }

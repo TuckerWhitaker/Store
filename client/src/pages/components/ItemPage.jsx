@@ -1,7 +1,11 @@
 import "./ItemPage.css";
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-function ItemPage() {
+function ItemPage(props) {
+	let { ItemId } = useParams();
+
+	console.log(ItemId);
 	return (
 		<div className="ItemPage">
 			<img
@@ -10,7 +14,7 @@ function ItemPage() {
 				alt="Italian Trulli"
 			/>
 			<div className="Iteminfo">
-				<div className="ItemName">Name</div>
+				<div className="ItemName">{ItemId}</div>
 				<div className="ItemPrice">Price</div>
 			</div>
 
