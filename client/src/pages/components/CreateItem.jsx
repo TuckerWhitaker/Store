@@ -6,6 +6,10 @@ let CurrentOption;
 let optionnames = [];
 
 function CreateItem() {
+	const ClearItems = () => {
+		axios.post("http://localhost:3001/api/ClearItems");
+	};
+
 	const [OptionName, SetOptionName] = useState("");
 	const [ValueName, SetValueName] = useState("");
 	const [ItemName, SetItemName] = useState("");
@@ -154,6 +158,13 @@ function CreateItem() {
 					Add Value to Selected Option
 				</button>
 			</div>
+			<button
+				onClick={() => {
+					ClearItems();
+				}}
+			>
+				CLEAR ALL ITEMS FROM DB
+			</button>
 		</div>
 	);
 }

@@ -5,11 +5,9 @@ function Item(props) {
 		<div
 			className="Item"
 			onClick={() => {
-				//document.getElementById("ItemPageParent").style.display = "flex";
-				//document.getElementById("ItemPageName").innerHTML = props.ItemInfo.name;
-				//document.getElementById("ItemPageDescription").innerHTML = props.ItemInfo.description;
-
 				props.SetOptionList(props.ItemInfo.options);
+				window.location.href =
+					"http://localhost:3000/item/" + props.ItemInfo.id;
 			}}
 		>
 			<img

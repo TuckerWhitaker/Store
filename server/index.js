@@ -36,12 +36,15 @@ app.post("/test", (req, res) => {
 	res.send("Test");
 });
 
-app.post("/api/CreateItem", (req, res) => {
+app.post("/api/CreateItem", async (req, res) => {
 	console.log("create item called");
 	//insert item info into db and send response on sucess/failure
 
-	MongoClient.connect(url, function (err, db) {
+	MongoClient.connect(url, async function (err, db) {
+		if (err) throw err;
+		var dbo = db.db("store");
 		var item = {
+			id: await dbo.collection("items").countDocuments(),
 			name: req.body.name,
 			description: req.body.description,
 			price: req.body.price,
@@ -50,9 +53,6 @@ app.post("/api/CreateItem", (req, res) => {
 		};
 
 		console.log(item);
-
-		if (err) throw err;
-		var dbo = db.db("store");
 		dbo.collection("items").insertOne(item, function (err, result) {
 			if (err) throw err;
 			console.log("1 document inserted");
@@ -71,19 +71,24 @@ app.post("/api/GetItems", async (req, res) => {
 			itemlist.push(element);
 		});
 		res.send(itemlist);
-		console.log(itemlist);
 	});
 });
 
-app.get("/item/:name", (req, res) => {
+app.post("/api/GetItem", async (req, res) => {
 	MongoClient.connect(url, async function (err, db) {
 		var dbo = db.db("store");
-		const item = dbo.collection("items").find({ name: req.params.name });
-		res.send(item);
-		console.log("got item");
+		const item = dbo.collection("items").findOne({ id: parseInt(req.body.id) });
+		res.send(await item);
+		console.log(await item);
 	});
 });
-
+app.post("/api/ClearItems", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		const item = dbo.collection("items").deleteMany({});
+		console.log("Cleared all items from db");
+	});
+});
 app.post("/api/OrderItem", (req, res) => {
 	//get item id and other user info then add to orders table
 });

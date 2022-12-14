@@ -2,8 +2,10 @@ import "./App.css";
 import Main from "./pages/Main.js";
 import Navbar from "./pages/Navbar";
 import AdminPage from "./pages/AdminPage";
+import CreateItem from "./pages/components/CreateItem";
 import ItemPage from "./pages/components/ItemPage";
 import CartPage from "./pages/components/CartPage";
+
 import {
 	useParams,
 	BrowserRouter as Router,
@@ -23,6 +25,7 @@ function App() {
 					<Route path="/" element={<Main />} />
 					<Route path="/Cart" element={<CartPage />} />
 					<Route path="/Admin" element={<AdminPage />} />
+					<Route path="/Admin/CreateItem" element={<CreateItem />} />
 					<Route path="/item/:ItemId" element={<ItemPage />} />
 				</Routes>
 			</Router>
