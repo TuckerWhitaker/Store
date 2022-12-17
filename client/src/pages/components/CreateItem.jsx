@@ -1,20 +1,35 @@
 import "./CreateItem.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 let CurrentOptionValues = [];
 let CurrentOption;
 let optionnames = [];
 
 function CreateItem() {
+	const [ItemList, SetItemList] = useState([]);
+	const GetItemList = () => {
+		axios.post("http://localhost:3001/api/GetItems").then((response) => {
+			console.log(response.data);
+			SetItemList(response.data);
+		});
+	};
+
+	useEffect(() => {
+		GetItemList();
+	}, []);
+
 	const ClearItems = () => {
 		axios.post("http://localhost:3001/api/ClearItems");
 	};
 
+	const [OptionNames, SetOptionNames] = useState();
+	const [Values, SetValueNames] = useState();
 	const [OptionName, SetOptionName] = useState("");
 	const [ValueName, SetValueName] = useState("");
 	const [ItemName, SetItemName] = useState("");
 	const [ItemDescription, SetDescription] = useState("");
 	const [Price, SetPrice] = useState();
+	const [ItemID, SetItemID] = useState();
 
 	const SetValueList = (OptionID) => {
 		OptionID = OptionID.id;
@@ -50,8 +65,6 @@ function CreateItem() {
 		option.className = "CreateItemOption";
 		option.innerHTML = OptionName;
 		optionnames.push(OptionName);
-		console.log("optionNames: ");
-		console.log(optionnames);
 		option.id = document.getElementById(
 			"CreateItemOptionContainer"
 		).childElementCount;
@@ -76,6 +89,7 @@ function CreateItem() {
 					<label className="CreateItemLabel">Name: </label>
 					<input
 						className="CreateItemInput"
+						id="ItemNameInput"
 						onChange={(e) => {
 							SetItemName(e.target.value);
 						}}
@@ -96,6 +110,7 @@ function CreateItem() {
 					<input
 						type="number"
 						className="CreateItemInput"
+						id="ItemPrice"
 						onChange={(e) => {
 							SetPrice(e.target.value);
 						}}
@@ -121,6 +136,30 @@ function CreateItem() {
 					}}
 				>
 					Create Item
+				</button>
+				<button
+					className="CreateItemBtn"
+					onClick={() => {
+						//UPDATE ITEM
+						/*axios
+							.post("http://localhost:3001/api/UpdateItem", {
+								id: ItemID,
+								name: ItemName,
+								description: ItemDescription,
+								price: Price,
+								options: CurrentOptionValues,
+								optionNames: optionnames,
+							})
+							.then((response) => {
+								if (response == "success") {
+									alert("success!");
+								}
+							});*/
+
+						console.log(ItemID);
+					}}
+				>
+					Update Item
 				</button>
 			</div>
 			<div className="CreateItemColumn">
@@ -157,14 +196,42 @@ function CreateItem() {
 				>
 					Add Value to Selected Option
 				</button>
+				<button
+					onClick={() => {
+						ClearItems();
+					}}
+				>
+					CLEAR ALL ITEMS FROM DB
+				</button>
 			</div>
-			<button
-				onClick={() => {
-					ClearItems();
-				}}
-			>
-				CLEAR ALL ITEMS FROM DB
-			</button>
+			<div className="CreateItemColumn">
+				<div className="UpdateItemList">
+					{ItemList.map((info, index) => {
+						return (
+							<button
+								className="ItemListItem"
+								key={index}
+								onClick={() => {
+									console.log("click");
+									document.getElementById("ItemNameInput").value = info.name;
+									SetItemName(info.name);
+									document.getElementById("description").value =
+										info.description;
+									SetDescription(info.description);
+									document.getElementById("ItemPrice").value = info.price;
+									SetPrice(info.price);
+									SetItemID(info.id);
+
+									//
+									SetOptionName();
+								}}
+							>
+								{info.name}
+							</button>
+						);
+					})}
+				</div>
+			</div>
 		</div>
 	);
 }
