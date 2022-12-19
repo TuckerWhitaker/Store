@@ -29,6 +29,7 @@ function CreateItem() {
 	const [ItemName, SetItemName] = useState("");
 	//selected option should be index of option
 	const [SelectedOption, SetSelectedOption] = useState();
+	const [SelectedValue, SetSelectedValue] = useState();
 	const [ItemDescription, SetDescription] = useState("");
 	const [Price, SetPrice] = useState();
 	const [OptionName, SetOptionName] = useState("");
@@ -41,12 +42,23 @@ function CreateItem() {
 		forceUpdate();
 	};
 
+	const DeleteOption = () => {
+		OptionList.splice(SelectedOption, 1);
+		SetOptionList(OptionList);
+		forceUpdate();
+	};
+
 	const AddValue = () => {
 		OptionList[SelectedOption].push(ValueName);
 		SetOptionList(OptionList);
 		forceUpdate();
 	};
 
+	const DeleteValue = () => {
+		OptionList[SelectedOption].splice(SelectedValue, 1);
+		SetOptionList(OptionList);
+		forceUpdate();
+	};
 	return (
 		<div className="CreateItemPage">
 			<div className="CreateItemColumn">
@@ -100,6 +112,7 @@ function CreateItem() {
 				>
 					Create Item
 				</button>
+
 				<button
 					className="CreateItemBtn"
 					onClick={() => {
@@ -117,6 +130,20 @@ function CreateItem() {
 					}}
 				>
 					Update Item
+				</button>
+				<button
+					className="CreateItemBtnDanger"
+					onClick={() => {
+						axios
+							.post("http://localhost:3001/api/DeleteItem", {
+								id: ItemID,
+							})
+							.then(() => {
+								window.location.reload();
+							});
+					}}
+				>
+					Delete Selected Item
 				</button>
 			</div>
 			<div className="CreateItemColumn">
@@ -163,15 +190,36 @@ function CreateItem() {
 				>
 					Add Option
 				</button>
+				<button
+					onClick={() => {
+						DeleteOption();
+					}}
+					className="CreateItemBtnDanger"
+				>
+					Delete Option
+				</button>
 				<div className="CreateItemValueContainer" id="CurrentValues">
 					{OptionList.map((info, index) => {
 						if (index === SelectedOption) {
-							console.log(info);
 							return info.map((info2, index2) => {
 								if (index2 > 0) {
-									console.log(info2);
 									return (
-										<button key={index + index2} className="CreateItemOption">
+										<button
+											key={"value" + index2}
+											id={"value" + index2}
+											className="CreateItemOption"
+											onClick={() => {
+												if (SelectedValue != undefined) {
+													document.getElementById(
+														"value" + SelectedValue
+													).style.backgroundColor = "rgb(200, 200, 200)";
+												}
+												document.getElementById(
+													"value" + index2
+												).style.backgroundColor = "#FBFBFB";
+												SetSelectedValue(index2);
+											}}
+										>
 											{info2}
 										</button>
 									);
@@ -195,6 +243,15 @@ function CreateItem() {
 					Add Value to Selected Option
 				</button>
 				<button
+					onClick={() => {
+						DeleteOption();
+					}}
+					className="CreateItemBtnDanger"
+				>
+					Delete Value from Selected Option
+				</button>
+				<button
+					className="ClearAll"
 					onClick={() => {
 						ClearItems();
 					}}
@@ -220,6 +277,8 @@ function CreateItem() {
 									SetPrice(info.price);
 									SetItemID(info.id);
 									SetOptionList(info.options);
+									SetSelectedOption(undefined);
+									SetSelectedValue(undefined);
 								}}
 							>
 								{info.name}

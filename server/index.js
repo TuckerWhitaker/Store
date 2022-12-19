@@ -107,6 +107,14 @@ app.post("/api/UpdateItem", async (req, res) => {
 	});
 });
 
+app.post("/api/DeleteItem", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		dbo.collection("items").deleteOne({ id: parseInt(req.body.id) });
+		res.send("success");
+	});
+});
+
 app.post("/api/OrderItem", (req, res) => {
 	//get item id and other user info then add to orders table
 });
