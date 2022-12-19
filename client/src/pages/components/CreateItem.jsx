@@ -1,15 +1,14 @@
 import "./CreateItem.css";
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
-let CurrentOptionValues = [];
-let CurrentOption;
-let optionnames = [];
 
 function CreateItem() {
+	const [, updateState] = React.useState();
+	const forceUpdate = React.useCallback(() => updateState({}), []);
+
 	const [ItemList, SetItemList] = useState([]);
 	const GetItemList = () => {
 		axios.post("http://localhost:3001/api/GetItems").then((response) => {
-			console.log(response.data);
 			SetItemList(response.data);
 		});
 	};
@@ -22,65 +21,28 @@ function CreateItem() {
 		axios.post("http://localhost:3001/api/ClearItems");
 	};
 
-	const [OptionNames, SetOptionNames] = useState();
-	const [Values, SetValueNames] = useState();
-	const [OptionName, SetOptionName] = useState("");
-	const [ValueName, SetValueName] = useState("");
+	//Option and Value List
+	const [OptionList, SetOptionList] = useState([]);
+	//first of every array is name and rest is values
+	//OptionList.push([OptionName]) for every new option
+	//
+
 	const [ItemName, SetItemName] = useState("");
+	//selected option should be index of option
+	const [SelectedOption, SetSelectedOption] = useState();
 	const [ItemDescription, SetDescription] = useState("");
 	const [Price, SetPrice] = useState();
+	const [OptionName, SetOptionName] = useState("");
+	const [ValueName, SetValueName] = useState("");
 	const [ItemID, SetItemID] = useState();
 
-	const SetValueList = (OptionID) => {
-		OptionID = OptionID.id;
-		let parent = document.getElementById("CurrentValues");
-		if (parent.childElementCount > 0) {
-			while (parent.firstChild) {
-				parent.removeChild(parent.firstChild);
-			}
-		}
-		if (CurrentOptionValues[OptionID] != undefined) {
-			for (let i = 0; i < CurrentOptionValues[OptionID].length; i++) {
-				let v = document.createElement("div");
-				v.innerHTML = CurrentOptionValues[OptionID][i];
-				v.className = "CreateItemOption";
-				document.getElementById("CurrentValues").appendChild(v);
-			}
-		}
-	};
-
-	const AddToValueList = (OptionID) => {
-		OptionID = OptionID.id;
-		console.log(CurrentOptionValues);
-		CurrentOptionValues[OptionID].push(ValueName);
-		let v = document.createElement("div");
-		v.innerHTML = ValueName;
-		v.className = "CreateItemOption";
-		document.getElementById("CurrentValues").appendChild(v);
-	};
-
 	const AddOption = () => {
-		console.log(CurrentOptionValues);
-		var option = document.createElement("button");
-		option.className = "CreateItemOption";
-		option.innerHTML = OptionName;
-		optionnames.push(OptionName);
-		option.id = document.getElementById(
-			"CreateItemOptionContainer"
-		).childElementCount;
-		option.addEventListener("click", () => {
-			if (CurrentOption != undefined) {
-				CurrentOption.style.backgroundColor = "rgb(200, 200, 200)";
-			}
-			option.style.backgroundColor = "#FBFBFB";
-			CurrentOption = option;
-
-			SetValueList(CurrentOption);
-			console.log(option.id);
-		});
-		CurrentOptionValues.push([]);
-		document.getElementById("CreateItemOptionContainer").appendChild(option);
+		OptionList.push([OptionName]);
+		SetOptionList(OptionList);
+		forceUpdate();
 	};
+
+	const AddValue = () => {};
 
 	return (
 		<div className="CreateItemPage">
@@ -166,7 +128,33 @@ function CreateItem() {
 				<div
 					className="CreateItemOptionContainer"
 					id="CreateItemOptionContainer"
-				></div>
+				>
+					{OptionList.map((info, index) => {
+						console.log(info);
+						return (
+							<button
+								className="CreateItemOption"
+								key={index}
+								id={"option" + index}
+								onClick={() => {
+									if (SelectedOption != undefined) {
+										document.getElementById(
+											"option" + SelectedOption
+										).style.backgroundColor = "rgb(200, 200, 200)";
+									}
+									document.getElementById(
+										"option" + index
+									).style.backgroundColor = "#FBFBFB";
+									SetSelectedOption(index);
+
+									//set value list
+								}}
+							>
+								{info}
+							</button>
+						);
+					})}
+				</div>
 				<input
 					className="CreateItemInput"
 					onChange={(e) => {
@@ -190,7 +178,7 @@ function CreateItem() {
 				></input>
 				<button
 					onClick={() => {
-						AddToValueList(CurrentOption);
+						AddValue(SelectedOption);
 					}}
 					className="CreateItemBtn"
 				>
@@ -221,9 +209,6 @@ function CreateItem() {
 									document.getElementById("ItemPrice").value = info.price;
 									SetPrice(info.price);
 									SetItemID(info.id);
-
-									//
-									SetOptionName();
 								}}
 							>
 								{info.name}
