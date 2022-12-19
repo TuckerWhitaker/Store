@@ -88,6 +88,25 @@ app.post("/api/ClearItems", async (req, res) => {
 		console.log("Cleared all items from db");
 	});
 });
+
+app.post("/api/UpdateItem", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		dbo.collection("items").updateOne(
+			{ id: parseInt(req.body.id) },
+			{
+				$set: {
+					name: req.body.name,
+					description: req.body.description,
+					price: req.body.price,
+					options: req.body.options,
+				},
+			}
+		);
+		res.send("success");
+	});
+});
+
 app.post("/api/OrderItem", (req, res) => {
 	//get item id and other user info then add to orders table
 });

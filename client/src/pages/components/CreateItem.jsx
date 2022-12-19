@@ -51,7 +51,9 @@ function CreateItem() {
 		<div className="CreateItemPage">
 			<div className="CreateItemColumn">
 				<div className="CreateItemInParent">
+					<div>Item ID: {ItemID}</div>
 					<label className="CreateItemLabel">Name: </label>
+
 					<input
 						className="CreateItemInput"
 						id="ItemNameInput"
@@ -101,23 +103,17 @@ function CreateItem() {
 				<button
 					className="CreateItemBtn"
 					onClick={() => {
-						//UPDATE ITEM
-						/*axios
+						axios
 							.post("http://localhost:3001/api/UpdateItem", {
 								id: ItemID,
 								name: ItemName,
 								description: ItemDescription,
 								price: Price,
-								options: CurrentOptionValues,
-								optionNames: optionnames,
+								options: OptionList,
 							})
-							.then((response) => {
-								if (response == "success") {
-									alert("success!");
-								}
-							});*/
-
-						console.log(ItemID);
+							.then(() => {
+								window.location.reload();
+							});
 					}}
 				>
 					Update Item
@@ -223,11 +219,6 @@ function CreateItem() {
 									document.getElementById("ItemPrice").value = info.price;
 									SetPrice(info.price);
 									SetItemID(info.id);
-									/*for (let i = 0; i < info.optionNames.length; i++) {
-										for(let j = 0; j < info.options.length; j++){
-
-										}
-									}*/
 									SetOptionList(info.options);
 								}}
 							>
