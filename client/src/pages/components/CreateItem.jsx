@@ -1,7 +1,6 @@
 import "./CreateItem.css";
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
-
 function CreateItem() {
 	const [, updateState] = React.useState();
 	const forceUpdate = React.useCallback(() => updateState({}), []);
@@ -42,7 +41,11 @@ function CreateItem() {
 		forceUpdate();
 	};
 
-	const AddValue = () => {};
+	const AddValue = () => {
+		OptionList[SelectedOption].push(ValueName);
+		SetOptionList(OptionList);
+		forceUpdate();
+	};
 
 	return (
 		<div className="CreateItemPage">
@@ -81,19 +84,15 @@ function CreateItem() {
 				<button
 					className="CreateItemBtn"
 					onClick={() => {
-						console.log(optionnames);
 						axios
 							.post("http://localhost:3001/api/CreateItem", {
 								name: ItemName,
 								description: ItemDescription,
 								price: Price,
-								options: CurrentOptionValues,
-								optionNames: optionnames,
+								options: OptionList,
 							})
-							.then((response) => {
-								if (response == "success") {
-									alert("success!");
-								}
+							.then(() => {
+								window.location.reload();
 							});
 					}}
 				>
@@ -130,7 +129,6 @@ function CreateItem() {
 					id="CreateItemOptionContainer"
 				>
 					{OptionList.map((info, index) => {
-						console.log(info);
 						return (
 							<button
 								className="CreateItemOption"
@@ -150,7 +148,7 @@ function CreateItem() {
 									//set value list
 								}}
 							>
-								{info}
+								{info[0]}
 							</button>
 						);
 					})}
@@ -169,7 +167,23 @@ function CreateItem() {
 				>
 					Add Option
 				</button>
-				<div className="CreateItemValueContainer" id="CurrentValues"></div>
+				<div className="CreateItemValueContainer" id="CurrentValues">
+					{OptionList.map((info, index) => {
+						if (index === SelectedOption) {
+							console.log(info);
+							return info.map((info2, index2) => {
+								if (index2 > 0) {
+									console.log(info2);
+									return (
+										<button key={index + index2} className="CreateItemOption">
+											{info2}
+										</button>
+									);
+								}
+							});
+						}
+					})}
+				</div>
 				<input
 					className="CreateItemInput"
 					onChange={(e) => {
@@ -178,7 +192,7 @@ function CreateItem() {
 				></input>
 				<button
 					onClick={() => {
-						AddValue(SelectedOption);
+						AddValue();
 					}}
 					className="CreateItemBtn"
 				>
@@ -200,7 +214,7 @@ function CreateItem() {
 								className="ItemListItem"
 								key={index}
 								onClick={() => {
-									console.log("click");
+									console.log(info);
 									document.getElementById("ItemNameInput").value = info.name;
 									SetItemName(info.name);
 									document.getElementById("description").value =
@@ -209,6 +223,12 @@ function CreateItem() {
 									document.getElementById("ItemPrice").value = info.price;
 									SetPrice(info.price);
 									SetItemID(info.id);
+									/*for (let i = 0; i < info.optionNames.length; i++) {
+										for(let j = 0; j < info.options.length; j++){
+
+										}
+									}*/
+									SetOptionList(info.options);
 								}}
 							>
 								{info.name}

@@ -49,7 +49,6 @@ app.post("/api/CreateItem", async (req, res) => {
 			description: req.body.description,
 			price: req.body.price,
 			options: req.body.options,
-			optionNames: req.body.optionNames,
 		};
 
 		console.log(item);

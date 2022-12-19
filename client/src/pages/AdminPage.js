@@ -13,16 +13,9 @@ function AdminPage() {
 					window.location.href = "http://localhost:3000/Admin/CreateItem";
 				}}
 			>
-				Create New Item
+				Manage Items
 			</button>
-			<button
-				className="AdminBtn"
-				onClick={() => {
-					window.location.href = "http://localhost:3000/Admin/UpdateItem";
-				}}
-			>
-				Update Item
-			</button>
+
 			<button className="AdminBtn">Orders</button>
 		</div>
 	);

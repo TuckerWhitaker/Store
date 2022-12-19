@@ -8,7 +8,6 @@ function ItemPage(props) {
 	const [ItemDesc, SetItemDesc] = useState("");
 	const [ItemPrice, SetItemPrice] = useState();
 	const [OptionList, SetOptionList] = useState([]);
-	const [ValueList, SetValueList] = useState([]);
 
 	let { ItemId } = useParams();
 
@@ -16,10 +15,10 @@ function ItemPage(props) {
 		axios
 			.post("http://localhost:3001/api/GetItem", { id: ItemId })
 			.then((response) => {
+				console.log(response);
 				SetItemName(response.data.name);
 				SetItemPrice(response.data.price);
-				SetOptionList(response.data.optionNames);
-				SetValueList(response.data.options);
+				SetOptionList(response.data.options);
 			});
 	};
 
@@ -46,14 +45,16 @@ function ItemPage(props) {
 			{OptionList.map((info, index) => {
 				return (
 					<div className="OptionParent" key={index}>
-						<div className="OptionName">{info}</div>
+						<div className="OptionName">{info[0]}</div>
 						<div className="OptionContainer">
-							{ValueList[index].map((info2, index2) => {
-								return (
-									<div className="OptionValue" key={index2}>
-										{info2}
-									</div>
-								);
+							{OptionList[index].map((info2, index2) => {
+								if (index2 > 0) {
+									return (
+										<div className="OptionValue" key={index2}>
+											{info2}
+										</div>
+									);
+								}
 							})}
 						</div>
 					</div>

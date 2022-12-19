@@ -5,7 +5,6 @@ import AdminPage from "./pages/AdminPage";
 import CreateItem from "./pages/components/CreateItem";
 import ItemPage from "./pages/components/ItemPage";
 import CartPage from "./pages/components/CartPage";
-import UpdateItem from "./pages/components/UpdateItem";
 
 import {
 	useParams,
@@ -27,7 +26,6 @@ function App() {
 					<Route path="/Cart" element={<CartPage />} />
 					<Route path="/Admin" element={<AdminPage />} />
 					<Route path="/Admin/CreateItem" element={<CreateItem />} />
-					<Route path="/Admin/UpdateItem" element={<UpdateItem />} />
 					<Route path="/item/:ItemId" element={<ItemPage />} />
 				</Routes>
 			</Router>

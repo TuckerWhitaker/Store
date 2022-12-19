@@ -14,7 +14,6 @@ function Main() {
 
 	const GetItemList = () => {
 		axios.post("http://localhost:3001/api/GetItems").then((response) => {
-			console.log(response.data);
 			SetItemList(response.data);
 		});
 	};
