@@ -36,6 +36,9 @@ function CreateItem() {
 	const [ValueName, SetValueName] = useState("");
 	const [ItemID, SetItemID] = useState();
 
+	const [LimitedTime, SetLimitedTime] = useState();
+	const [EndDate, SetEndDate] = useState();
+
 	const AddOption = () => {
 		OptionList.push([OptionName]);
 		SetOptionList(OptionList);
@@ -104,6 +107,8 @@ function CreateItem() {
 								description: ItemDescription,
 								price: Price,
 								options: OptionList,
+								limitedTime: LimitedTime,
+								endDate: EndDate,
 							})
 							.then(() => {
 								window.location.reload();
@@ -123,6 +128,8 @@ function CreateItem() {
 								description: ItemDescription,
 								price: Price,
 								options: OptionList,
+								limitedTime: LimitedTime,
+								endDate: EndDate,
 							})
 							.then(() => {
 								window.location.reload();
@@ -145,6 +152,24 @@ function CreateItem() {
 				>
 					Delete Selected Item
 				</button>
+				<div className="DateContainer">
+					<div className="DateText">Limited Time?</div>
+					<input
+						type="checkbox"
+						className="CheckBox"
+						id="LimitedTime"
+						onChange={(e) => {
+							SetLimitedTime(e.target.value);
+						}}
+					></input>
+					<input
+						type="date"
+						id="SetDate"
+						onChange={(e) => {
+							SetEndDate(e.target.value);
+						}}
+					></input>
+				</div>
 			</div>
 			<div className="CreateItemColumn">
 				<div
@@ -279,6 +304,9 @@ function CreateItem() {
 									SetOptionList(info.options);
 									SetSelectedOption(undefined);
 									SetSelectedValue(undefined);
+									document.getElementById("SetDate").value = info.endDate;
+									document.getElementById("LimitedTime").checked =
+										info.limitedTime;
 								}}
 							>
 								{info.name}
