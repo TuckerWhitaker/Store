@@ -8,15 +8,9 @@ function ItemPage(props) {
 	const [ItemDesc, SetItemDesc] = useState("");
 	const [ItemPrice, SetItemPrice] = useState();
 	const [OptionList, SetOptionList] = useState([]);
-	const [EndDate, SetEndDate] = useState();
 	let { ItemId } = useParams();
 
-	function delay(time) {
-		return new Promise((resolve) => setTimeout(resolve, time));
-	}
-
-	async function UpdateDate() {
-		await delay(5000);
+	async function UpdateDate(enddate) {
 		var x = setInterval(function () {
 			var months = [
 				"0",
@@ -33,20 +27,18 @@ function ItemPage(props) {
 				"Nov",
 				"Dec",
 			];
-			console.log(EndDate);
 
 			var countDownDate = new Date(
-				months[EndDate[5] + EndDate[6]] +
+				months[enddate[5] + enddate[6]] +
 					"" +
-					(EndDate[8] + EndDate[9]) +
+					(enddate[8] + enddate[9]) +
 					", " +
-					EndDate[0] +
-					EndDate[1] +
-					EndDate[2] +
-					EndDate[3] +
-					" 12:00:00"
+					enddate[0] +
+					enddate[1] +
+					enddate[2] +
+					enddate[3] +
+					" 0:00:00"
 			).getTime();
-			//var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
 			var now = new Date().getTime();
 
 			var distance = countDownDate - now;
@@ -59,6 +51,13 @@ function ItemPage(props) {
 
 			document.getElementById("time").innerHTML =
 				days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+			if (distance < 0) {
+				clearInterval(x);
+				document.getElementById("time").innerHTML =
+					"this item is no longer available";
+				document.getElementById("OrderButton").style.display = "none";
+			}
 		}, 1000);
 	}
 
@@ -71,8 +70,8 @@ function ItemPage(props) {
 				SetItemPrice(response.data.price);
 				SetOptionList(response.data.options);
 				if (response.data.limitedTime) {
-					SetEndDate(response.data.endDate);
-					UpdateDate();
+					//console.log(response.data.endDate);
+					UpdateDate(response.data.endDate);
 				}
 			});
 	};
@@ -83,6 +82,7 @@ function ItemPage(props) {
 
 	return (
 		<div className="ItemPage">
+			<div id="time"></div>
 			<img
 				className="ItemPageImage"
 				src="https://m.media-amazon.com/images/I/71BnqTCnBRL._AC_UX679_.jpg"
@@ -116,8 +116,7 @@ function ItemPage(props) {
 				);
 			})}
 
-			<div id="time">{EndDate}</div>
-			<button className="ItemPageBtn" onClick={() => {}}>
+			<button className="ItemPageBtn" id="OrderButton" onClick={() => {}}>
 				Add To Cart
 			</button>
 		</div>
