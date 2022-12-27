@@ -1,6 +1,8 @@
 import "./CreateItem.css";
 import React, { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
+import FormData from "form-data";
+
 function CreateItem() {
 	const [, updateState] = React.useState();
 	const forceUpdate = React.useCallback(() => updateState({}), []);
@@ -24,8 +26,6 @@ function CreateItem() {
 	const [OptionList, SetOptionList] = useState([]);
 	//first of every array is name and rest is values
 	//OptionList.push([OptionName]) for every new option
-	//
-
 	const [ItemName, SetItemName] = useState("");
 	//selected option should be index of option
 	const [SelectedOption, SetSelectedOption] = useState();
@@ -39,7 +39,7 @@ function CreateItem() {
 	const [LimitedTime, SetLimitedTime] = useState();
 	const [EndDate, SetEndDate] = useState();
 
-	const [image, Setimage] = useState();
+	const [ImageFile, SetFile] = useState();
 
 	const AddOption = () => {
 		OptionList.push([OptionName]);
@@ -64,6 +64,28 @@ function CreateItem() {
 		SetOptionList(OptionList);
 		forceUpdate();
 	};
+
+	const UploadImage = () => {
+		console.log(ImageFile);
+		let data = new FormData();
+		data.append("file", ImageFile, ImageFile.name);
+
+		axios
+			.post("http://localhost:3001/image", data, {
+				headers: {
+					accept: "application/json",
+					"Accept-Language": "en-US,en;q=0.8",
+					"Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+				},
+			})
+			.then((response) => {
+				//handle success
+			})
+			.catch((error) => {
+				//handle error
+			});
+	};
+
 	return (
 		<div className="CreateItemPage">
 			<div className="CreateItemColumn">
@@ -101,19 +123,27 @@ function CreateItem() {
 					></input>
 				</div>
 
-				<form
-					method="POST"
-					action="http://localhost:3001/image"
-					encType="multipart/form-data"
-				>
-					<div>
-						<label>Upload multiple profile picture</label>
-						<input type="file" name="file" required multiple />
-					</div>
-					<div>
-						<input type="submit" value="Upload" />
-					</div>
-				</form>
+				<div>
+					<label>Upload multiple profile picture</label>
+					<input
+						type="file"
+						name="file"
+						id="file"
+						onChange={function (event) {
+							SetFile(event.target.files[0]);
+							console.log(ImageFile);
+						}}
+					/>
+				</div>
+				<div>
+					<button
+						onClick={() => {
+							UploadImage();
+						}}
+					>
+						Button
+					</button>
+				</div>
 
 				<button
 					className="CreateItemBtn"

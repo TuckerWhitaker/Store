@@ -5,31 +5,23 @@ const express = require("express");
 const app = express();
 const port = 3001;
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-const morgan = require("morgan");
-
+const fs = require("fs");
+const dir = "./uploads";
 const storage = multer.diskStorage({
-	destination: function (req, file, callback) {
-		callback(null, "/src/my-images");
-	},
-	filename: function (req, file, callback) {
-		callback(null, file.fieldname);
+	destination: "./uploads/",
+	filename: function (req, file, cb) {
+		fs.readdir(dir, (err, files) => {
+			console.log(files.length);
+			cb(null, files.length + ".png");
+		});
 	},
 });
+
+const upload = multer({ storage: storage });
+const morgan = require("morgan");
 
 var MongoClient = require("mongodb").MongoClient;
 var url = "mongodb://localhost:27017/";
-
-MongoClient.connect(url, function (err, db) {
-	if (err) throw err;
-	var dbo = db.db("store");
-
-	/* dbo.collection("items").findOne({}, function (err, result) {
-    if (err) throw err;
-    console.log(result);
-    db.close();
-  });*/
-});
 
 app.use(cors());
 app.use(express.json());
