@@ -39,6 +39,8 @@ function CreateItem() {
 	const [LimitedTime, SetLimitedTime] = useState();
 	const [EndDate, SetEndDate] = useState();
 
+	const [image, Setimage] = useState();
+
 	const AddOption = () => {
 		OptionList.push([OptionName]);
 		SetOptionList(OptionList);
@@ -98,6 +100,21 @@ function CreateItem() {
 						}}
 					></input>
 				</div>
+
+				<form
+					method="POST"
+					action="http://localhost:3001/image"
+					encType="multipart/form-data"
+				>
+					<div>
+						<label>Upload multiple profile picture</label>
+						<input type="file" name="file" required multiple />
+					</div>
+					<div>
+						<input type="submit" value="Upload" />
+					</div>
+				</form>
+
 				<button
 					className="CreateItemBtn"
 					onClick={() => {

@@ -4,6 +4,18 @@ var http = require("http");
 const express = require("express");
 const app = express();
 const port = 3001;
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const morgan = require("morgan");
+
+const storage = multer.diskStorage({
+	destination: function (req, file, callback) {
+		callback(null, "/src/my-images");
+	},
+	filename: function (req, file, callback) {
+		callback(null, file.fieldname);
+	},
+});
 
 var MongoClient = require("mongodb").MongoClient;
 var url = "mongodb://localhost:27017/";
@@ -22,10 +34,25 @@ MongoClient.connect(url, function (err, db) {
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 const server = http.createServer(app);
 
 server.listen(3001);
 console.log("server running on port 3001");
+
+app.post("/image", upload.single("file"), (req, res) => {
+	if (!req.file) {
+		console.log("No file received");
+		return res.send({
+			success: false,
+		});
+	} else {
+		console.log("file received");
+		return res.send({
+			success: true,
+		});
+	}
+});
 
 app.post("/api/CreateItem", async (req, res) => {
 	console.log("create item called");
