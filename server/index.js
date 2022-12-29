@@ -10,10 +10,7 @@ const dir = "./uploads";
 const storage = multer.diskStorage({
 	destination: "./uploads/",
 	filename: function (req, file, cb) {
-		fs.readdir(dir, (err, files) => {
-			console.log(files.length);
-			cb(null, files.length + ".png");
-		});
+		cb(null, Date.now() + ".png");
 	},
 });
 
@@ -54,7 +51,8 @@ app.post("/api/CreateItem", async (req, res) => {
 		if (err) throw err;
 		var dbo = db.db("store");
 		var item = {
-			id: await dbo.collection("items").countDocuments(),
+			//id: await dbo.collection("items").countDocuments(),
+			id: Date.now(),
 			name: req.body.name,
 			description: req.body.description,
 			price: req.body.price,

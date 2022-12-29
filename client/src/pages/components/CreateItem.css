@@ -22,7 +22,7 @@
 }
 
 #description {
-	height: 15vh;
+	height: 5vh;
 	text-align: start;
 	resize: none;
 }
@@ -115,8 +115,25 @@
 
 .UpdateItemList {
 	width: 30vw;
-	height: 99vh;
+	height: 30vh;
 	border-style: solid;
+}
+
+.ImageManager {
+	display: flex;
+	border-style: solid;
+	flex-direction: column;
+	height: 60vh;
+	width: 30vw;
+}
+
+.FileContainer {
+	width: 100%;
+	height: 50vh;
+	overflow-y: scroll;
+}
+.ImageBtnContainer {
+	margin-top: 10%;
 }
 
 .UpdateItemInfo {
@@ -126,7 +143,7 @@
 
 .ItemListItem {
 	width: 100%;
-	height: 5%;
+	height: 15%;
 }
 
 .ItemListItem:hover {

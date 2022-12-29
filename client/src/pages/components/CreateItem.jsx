@@ -39,7 +39,11 @@ function CreateItem() {
 	const [LimitedTime, SetLimitedTime] = useState();
 	const [EndDate, SetEndDate] = useState();
 
-	const [ImageFile, SetFile] = useState();
+	const [ImageFiles, SetImageFiles] = useState([]);
+
+	function delay(time) {
+		return new Promise((resolve) => setTimeout(resolve, time));
+	}
 
 	const AddOption = () => {
 		OptionList.push([OptionName]);
@@ -65,26 +69,29 @@ function CreateItem() {
 		forceUpdate();
 	};
 
-	const UploadImage = () => {
-		console.log(ImageFile);
-		let data = new FormData();
-		data.append("file", ImageFile, ImageFile.name);
+	async function UploadImage() {
+		console.log(ImageFiles);
+		for (let i = 0; i < ImageFiles.length; i++) {
+			await delay(1);
+			let data = new FormData();
+			data.append("file", ImageFiles[i]);
 
-		axios
-			.post("http://localhost:3001/image", data, {
-				headers: {
-					accept: "application/json",
-					"Accept-Language": "en-US,en;q=0.8",
-					"Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-				},
-			})
-			.then((response) => {
-				//handle success
-			})
-			.catch((error) => {
-				//handle error
-			});
-	};
+			axios
+				.post("http://localhost:3001/image", data, {
+					headers: {
+						accept: "application/json",
+						"Accept-Language": "en-US,en;q=0.8",
+						"Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+					},
+				})
+				.then((response) => {
+					//handle success
+				})
+				.catch((error) => {
+					//handle error
+				});
+		}
+	}
 
 	return (
 		<div className="CreateItemPage">
@@ -121,28 +128,6 @@ function CreateItem() {
 							SetPrice(e.target.value);
 						}}
 					></input>
-				</div>
-
-				<div>
-					<label>Upload multiple profile picture</label>
-					<input
-						type="file"
-						name="file"
-						id="file"
-						onChange={function (event) {
-							SetFile(event.target.files[0]);
-							console.log(ImageFile);
-						}}
-					/>
-				</div>
-				<div>
-					<button
-						onClick={() => {
-							UploadImage();
-						}}
-					>
-						Button
-					</button>
 				</div>
 
 				<button
@@ -316,7 +301,7 @@ function CreateItem() {
 				</button>
 				<button
 					onClick={() => {
-						DeleteOption();
+						DeleteValue();
 					}}
 					className="CreateItemBtnDanger"
 				>
@@ -339,7 +324,6 @@ function CreateItem() {
 								className="ItemListItem"
 								key={index}
 								onClick={() => {
-									console.log(info);
 									document.getElementById("ItemNameInput").value = info.name;
 									SetItemName(info.name);
 									document.getElementById("description").value =
@@ -360,6 +344,49 @@ function CreateItem() {
 							</button>
 						);
 					})}
+				</div>
+				<div className="ImageManager" id="ImageManager">
+					<label>Images</label>
+
+					<div className="FileContainer" id="FileContainer">
+						<input
+							type="file"
+							name="file"
+							onChange={function (event) {
+								ImageFiles.push(event.target.files[0]);
+								SetImageFiles(ImageFiles);
+								forceUpdate();
+							}}
+						/>
+					</div>
+
+					<div className="ImageBtnContainer">
+						<button
+							onClick={() => {
+								let newimage = document.createElement("input");
+								newimage.type = "file";
+								newimage.name = "file";
+								(newimage.onchange = function (event) {
+									console.log(ImageFiles);
+									ImageFiles.push(event.target.files[0]);
+									SetImageFiles(ImageFiles);
+									forceUpdate();
+								}),
+									document
+										.getElementById("FileContainer")
+										.appendChild(newimage);
+							}}
+						>
+							Add Image
+						</button>
+						<button
+							onClick={() => {
+								UploadImage();
+							}}
+						>
+							Upload
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
