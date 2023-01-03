@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios, { Axios } from "axios";
 
 function ItemPage(props) {
+	const [ImageId, SetImageId] = useState();
 	const [ItemName, SetItemName] = useState("");
 	const [ItemDesc, SetItemDesc] = useState("");
 	const [ItemPrice, SetItemPrice] = useState();
@@ -28,9 +29,22 @@ function ItemPage(props) {
 				"Dec",
 			];
 
+			if (enddate[5]) {
+				enddate =
+					enddate[0] +
+					enddate[1] +
+					enddate[2] +
+					enddate[3] +
+					enddate[4] +
+					"1" +
+					enddate[6] +
+					enddate[7] +
+					enddate[8] +
+					enddate[9];
+			}
 			var countDownDate = new Date(
-				months[enddate[5] + enddate[6]] +
-					"" +
+				months[parseInt(enddate[5] + enddate[6])] +
+					" " +
 					(enddate[8] + enddate[9]) +
 					", " +
 					enddate[0] +
@@ -42,6 +56,7 @@ function ItemPage(props) {
 			var now = new Date().getTime();
 
 			var distance = countDownDate - now;
+
 			var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 			var hours = Math.floor(
 				(distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -69,11 +84,24 @@ function ItemPage(props) {
 				SetItemName(response.data.name);
 				SetItemPrice(response.data.price);
 				SetOptionList(response.data.options);
+				SetImageId(response.data.imageNames[0]);
+
 				if (response.data.limitedTime) {
-					//console.log(response.data.endDate);
+					console.log(response.data.endDate);
 					UpdateDate(response.data.endDate);
 				}
+				document.getElementById("Image").src =
+					"http://localhost:3001/api/getImage?id=" +
+					response.data.imageNames[0];
 			});
+		/*axios
+					.get("http://localhost:3001/api/getImage", {
+						id: response.data.imageNames[0],
+					})
+					.then((res) => {
+						console.log(res);
+						
+			});*/
 	};
 
 	useEffect(() => {
@@ -83,11 +111,7 @@ function ItemPage(props) {
 	return (
 		<div className="ItemPage">
 			<div id="time"></div>
-			<img
-				className="ItemPageImage"
-				src="https://m.media-amazon.com/images/I/71BnqTCnBRL._AC_UX679_.jpg"
-				alt="Italian Trulli"
-			/>
+			<img className="ItemPageImage" id="Image" alt="Italian Trulli" />
 			<div className="Iteminfo">
 				<div className="ItemName" id="name">
 					{ItemName}

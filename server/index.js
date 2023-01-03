@@ -5,12 +5,12 @@ const express = require("express");
 const app = express();
 const port = 3001;
 const multer = require("multer");
-const fs = require("fs");
 const dir = "./uploads";
 const storage = multer.diskStorage({
 	destination: "./uploads/",
 	filename: function (req, file, cb) {
-		cb(null, Date.now() + ".png");
+		cb(null, file.originalname + ".png");
+		//cb(null, Date.now() + ".png");
 	},
 });
 
@@ -29,7 +29,7 @@ const server = http.createServer(app);
 server.listen(3001);
 console.log("server running on port 3001");
 
-app.post("/image", upload.single("file"), (req, res) => {
+app.post("/api/uploadImage", upload.single("file"), (req, res) => {
 	if (!req.file) {
 		console.log("No file received");
 		return res.send({
@@ -43,6 +43,12 @@ app.post("/image", upload.single("file"), (req, res) => {
 	}
 });
 
+app.get("/api/getImage", (req, res) => {
+	console.log(req.body);
+	//res.sendFile("F:/WebDev/Store/server/uploads/1672765674203.png");
+	res.sendFile("F:/WebDev/Store/server/uploads/" + req.query.id + ".png");
+});
+
 app.post("/api/CreateItem", async (req, res) => {
 	console.log("create item called");
 	//insert item info into db and send response on sucess/failure
@@ -51,12 +57,12 @@ app.post("/api/CreateItem", async (req, res) => {
 		if (err) throw err;
 		var dbo = db.db("store");
 		var item = {
-			//id: await dbo.collection("items").countDocuments(),
 			id: Date.now(),
 			name: req.body.name,
 			description: req.body.description,
 			price: req.body.price,
 			options: req.body.options,
+			imageNames: req.body.imageNames,
 			limitedTime: req.body.limitedTime,
 			endDate: req.body.endDate,
 		};

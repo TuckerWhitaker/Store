@@ -69,15 +69,17 @@ function CreateItem() {
 		forceUpdate();
 	};
 
-	async function UploadImage() {
-		console.log(ImageFiles);
+	async function CreateNewItem() {
+		let ImageNames = [];
 		for (let i = 0; i < ImageFiles.length; i++) {
 			await delay(1);
+			let ImageName = Date.now();
+			ImageNames.push(ImageName);
 			let data = new FormData();
-			data.append("file", ImageFiles[i]);
+			data.append("file", ImageFiles[i], ImageName);
 
 			axios
-				.post("http://localhost:3001/image", data, {
+				.post("http://localhost:3001/api/uploadImage", data, {
 					headers: {
 						accept: "application/json",
 						"Accept-Language": "en-US,en;q=0.8",
@@ -91,7 +93,23 @@ function CreateItem() {
 					//handle error
 				});
 		}
+
+		axios
+			.post("http://localhost:3001/api/CreateItem", {
+				name: ItemName,
+				description: ItemDescription,
+				price: Price,
+				options: OptionList,
+				imageNames: ImageNames,
+				limitedTime: LimitedTime,
+				endDate: EndDate,
+			})
+			.then(() => {
+				window.location.reload();
+			});
 	}
+
+	async function UploadImage() {}
 
 	return (
 		<div className="CreateItemPage">
@@ -133,18 +151,7 @@ function CreateItem() {
 				<button
 					className="CreateItemBtn"
 					onClick={() => {
-						axios
-							.post("http://localhost:3001/api/CreateItem", {
-								name: ItemName,
-								description: ItemDescription,
-								price: Price,
-								options: OptionList,
-								limitedTime: LimitedTime,
-								endDate: EndDate,
-							})
-							.then(() => {
-								window.location.reload();
-							});
+						CreateNewItem();
 					}}
 				>
 					Create Item
