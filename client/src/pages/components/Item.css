@@ -1,5 +1,6 @@
 .Item {
 	margin: 3vw;
+	margin-bottom: 20vh;
 	width: 50vw;
 	height: 30vh;
 }
@@ -9,5 +10,5 @@
 }
 
 .ItemImage {
-	width: max-content;
+	width: 30vh;
 }

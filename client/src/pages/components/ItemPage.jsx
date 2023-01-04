@@ -140,7 +140,15 @@ function ItemPage(props) {
 				);
 			})}
 
-			<button className="ItemPageBtn" id="OrderButton" onClick={() => {}}>
+			<button
+				className="ItemPageBtn"
+				id="OrderButton"
+				onClick={() => {
+					let p = localStorage.CartItemIDs;
+					localStorage.CartItemIDs = p + "itemid:" + ItemId;
+					console.log(localStorage);
+				}}
+			>
 				Add To Cart
 			</button>
 		</div>

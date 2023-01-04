@@ -12,7 +12,10 @@ function Item(props) {
 		>
 			<img
 				className="ItemImage"
-				src="https://cdn.gardengrocer.com/attachments/photos/big/905.jpg?8318"
+				src={
+					"http://localhost:3001/api/getImage?id=" +
+					props.ItemInfo.imageNames[0]
+				}
 				alt="Italian Trulli"
 			></img>
 			<div id="itemprevname">{props.ItemInfo.name}</div>
