@@ -94,14 +94,6 @@ function ItemPage(props) {
 					"http://localhost:3001/api/getImage?id=" +
 					response.data.imageNames[0];
 			});
-		/*axios
-					.get("http://localhost:3001/api/getImage", {
-						id: response.data.imageNames[0],
-					})
-					.then((res) => {
-						console.log(res);
-						
-			});*/
 	};
 
 	useEffect(() => {

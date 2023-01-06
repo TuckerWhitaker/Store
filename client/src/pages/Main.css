@@ -1,7 +1,7 @@
 .Main {
 	display: grid;
 	grid-template-columns: auto auto;
-	padding: 10px;
+	grid-template-rows: 30vh 30vh;
 	width: 100vw;
 	height: 100vh;
 
@@ -9,7 +9,7 @@
 
 	font-family: "Abhaya Libre";
 	font-size: 22px;
-	background-color: rgb(254, 191, 113);
+	background-color: rgb(255, 255, 255);
 }
 
 .Parent {
