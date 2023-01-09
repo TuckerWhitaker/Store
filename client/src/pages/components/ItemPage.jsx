@@ -2,6 +2,7 @@ import "./ItemPage.css";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios, { Axios } from "axios";
+import Cookies from "js-cookie";
 
 function ItemPage(props) {
 	const [ImageId, SetImageId] = useState();
@@ -136,9 +137,8 @@ function ItemPage(props) {
 				className="ItemPageBtn"
 				id="OrderButton"
 				onClick={() => {
-					let p = localStorage.CartItemIDs;
-					localStorage.CartItemIDs = p + "itemid:" + ItemId;
-					console.log(localStorage);
+					Cookies.set("cart", ItemId + "*" + Cookies.get("cart"));
+					console.log(Cookies.get("cart"));
 				}}
 			>
 				Add To Cart
