@@ -89,6 +89,29 @@ app.post("/api/GetItems", async (req, res) => {
 	});
 });
 
+app.post("/api/GetItemsWithIds", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+
+		const PromiseFunction = (ID) => {
+			return new Promise(async (resolve, reject) => {
+				var item = await dbo.collection("items").findOne({ id: parseInt(ID) });
+				resolve(item);
+			}).then((data) => {
+				return data;
+			});
+		};
+		let Promises = [];
+		for (let i = 0; i < req.body.ids.length; i++) {
+			Promises.push(PromiseFunction(req.body.ids[i]));
+		}
+		Promise.all(Promises).then((data) => {
+			console.log(data);
+			res.send(data);
+		});
+	});
+});
+
 app.post("/api/GetItem", async (req, res) => {
 	MongoClient.connect(url, async function (err, db) {
 		var dbo = db.db("store");

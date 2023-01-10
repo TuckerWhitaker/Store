@@ -2,7 +2,7 @@
 	margin: 0;
 	width: 100%;
 	height: 5vh;
-	background-color: rgb(254, 206, 147);
+	background-color: rgb(255, 255, 255);
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -11,16 +11,16 @@
 .NavBarButton {
 	width: 30%;
 	height: 90%;
-	background-color: #6d6dd600;
-	color: rgb(125, 77, 20);
+	background-color: #4b4b4b00;
+	color: rgb(0, 0, 0);
 	border-style: initial;
 	border-radius: 1px;
 	transition-duration: 500ms;
 	font-family: "Abhaya Libre";
-	font-size: 22px;
+	font-size: 30px;
 }
 
 .NavBarButton:hover {
-	background-color: rgb(142, 93, 33);
-	color: rgb(254, 206, 147);
+	background-color: rgb(242, 242, 242);
+	color: rgb(87, 87, 87);
 }

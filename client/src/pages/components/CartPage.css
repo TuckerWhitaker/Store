@@ -9,15 +9,16 @@
 	flex-direction: column;
 	align-items: center;
 	width: 100vw;
-	height: 90vh;
-	background-color: burlywood;
+	min-height: 85vh;
+	height: fit-content;
+	background-color: rgb(255, 255, 255);
 }
 
 .ItemListChild {
 	display: flex;
 	width: 99vw;
 	height: 5vh;
-	background-color: antiquewhite;
+	background-color: rgb(236, 236, 236);
 	border-style: rgb(255, 255, 255);
 }
 
@@ -28,7 +29,7 @@
 .OrderInfo {
 	width: 100vw;
 	height: 10vh;
-	background-color: burlywood;
+	background-color: rgb(255, 255, 255);
 }
 
 .OrderBtn {

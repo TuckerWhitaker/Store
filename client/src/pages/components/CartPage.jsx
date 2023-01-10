@@ -11,43 +11,39 @@ function CartPage() {
 	const [ItemName, SetItemName] = useState("");
 	const [ItemPrice, SetItemPrice] = useState();
 
-	let id = "";
-	for (let i = 0; i < itemIds.length; i++) {
-		if (itemIds[i] == "*") {
-			ItemIdArray.push(id);
-			id = "";
-		} else {
-			id = id + itemIds[i];
-		}
-	}
-
-	console.log(ItemIdArray);
-
 	useEffect(() => {
-		for (let i = 0; i < ItemIdArray.length; i++) {
-			axios
-				.post("http://localhost:3001/api/GetItem", { id: ItemIdArray[i] })
-				.then((response) => {
-					console.log(response);
-					//response.data
-					Items.push(response.data);
-					SetItems(Items);
-					console.log(Items);
-				});
+		let id = "";
+		for (let i = 0; i < itemIds.length; i++) {
+			if (itemIds[i] == "*") {
+				ItemIdArray.push(id);
+				id = "";
+			} else {
+				id = id + itemIds[i];
+			}
 		}
+		axios
+			.post("http://localhost:3001/api/GetItemsWithIds", {
+				ids: ItemIdArray,
+			})
+			.then((response) => {
+				console.log(response);
+				SetItems(response.data);
+				console.log(response.data);
+			});
 	}, []);
 
 	return (
 		<div className="CartParent">
 			<div className="ItemList">
 				{Items.map((info, index) => {
-					return <div key={index}>1</div>;
+					return (
+						<div className="ItemListChild" key={index}>
+							<div className="ItemColumn">Image</div>
+							<div className="ItemColumn">{info.name}</div>
+							<div className="ItemColumn">{info.price}</div>
+						</div>
+					);
 				})}
-				<div className="ItemListChild">
-					<div className="ItemColumn">Image</div>
-					<div className="ItemColumn">Name/desc</div>
-					<div className="ItemColumn">Price</div>
-				</div>
 			</div>
 			<div className="OrderInfo">
 				<div>Total</div>

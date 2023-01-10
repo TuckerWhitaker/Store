@@ -20,6 +20,7 @@ function App() {
 				rel="stylesheet"
 				href="https://fonts.googleapis.com/css?family=Abhaya Libre"
 			/>
+			<Navbar></Navbar>
 			<Router>
 				<Routes>
 					<Route path="/" element={<Main />} />
