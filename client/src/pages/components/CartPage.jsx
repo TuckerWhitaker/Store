@@ -8,8 +8,8 @@ function CartPage() {
 
 	const [ItemIdArray, SetItemIdArray] = useState([]);
 	const [Items, SetItems] = useState([]);
-	const [ItemName, SetItemName] = useState("");
-	const [ItemPrice, SetItemPrice] = useState();
+	const [EmptyCart, SetEmptyCart] = useState();
+	let CartTotal = 0;
 
 	useEffect(() => {
 		let id = "";
@@ -26,15 +26,19 @@ function CartPage() {
 				ids: ItemIdArray,
 			})
 			.then((response) => {
-				console.log(response);
 				SetItems(response.data);
-				console.log(response.data);
+				if (response.data.length < 1) {
+					SetEmptyCart("Your cart is empty");
+				} else {
+					SetEmptyCart("");
+				}
 			});
 	}, []);
 
 	return (
 		<div className="CartParent">
 			<div className="ItemList">
+				{EmptyCart}
 				{Items.map((info, index) => {
 					return (
 						<div className="ItemListChild" key={index}>
@@ -46,11 +50,16 @@ function CartPage() {
 				})}
 			</div>
 			<div className="OrderInfo">
-				<div>Total</div>
+				{Items.map((info, index) => {
+					CartTotal += parseInt(info.price);
+					document.getElementById("CartTotal").innerHTML = CartTotal;
+				})}
+				<div id="CartTotal"></div>
 				<button className="OrderBtn">Proceed to Checkout</button>
 				<button
 					onClick={() => {
 						Cookies.set("cart", "");
+						window.location.href = "http://localhost:3000/cart";
 					}}
 				>
 					Clear Cart

@@ -5,7 +5,7 @@ import AdminPage from "./pages/AdminPage";
 import CreateItem from "./pages/components/CreateItem";
 import ItemPage from "./pages/components/ItemPage";
 import CartPage from "./pages/components/CartPage";
-
+import ContactPage from "./pages/components/ContactPage";
 import {
 	useParams,
 	BrowserRouter as Router,
@@ -25,6 +25,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Main />} />
 					<Route path="/Cart" element={<CartPage />} />
+					<Route path="/Contact" element={<ContactPage />} />
 					<Route path="/Admin" element={<AdminPage />} />
 					<Route path="/Admin/CreateItem" element={<CreateItem />} />
 					<Route path="/item/:ItemId" element={<ItemPage />} />
