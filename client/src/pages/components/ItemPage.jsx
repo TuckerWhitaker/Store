@@ -7,53 +7,15 @@ import Cookies from "js-cookie";
 function ItemPage(props) {
 	const [ImageId, SetImageId] = useState();
 	const [ItemName, SetItemName] = useState("");
-	const [ItemDesc, SetItemDesc] = useState("");
 	const [ItemPrice, SetItemPrice] = useState();
 	const [OptionList, SetOptionList] = useState([]);
+
 	let { ItemId } = useParams();
 
 	async function UpdateDate(enddate) {
+		console.log(enddate);
 		var x = setInterval(function () {
-			var months = [
-				"0",
-				"Jan",
-				"Feb",
-				"Mar",
-				"Apr",
-				"May",
-				"Jun",
-				"Jul",
-				"Aug",
-				"Sep",
-				"Oct",
-				"Nov",
-				"Dec",
-			];
-
-			if (enddate[5]) {
-				enddate =
-					enddate[0] +
-					enddate[1] +
-					enddate[2] +
-					enddate[3] +
-					enddate[4] +
-					"1" +
-					enddate[6] +
-					enddate[7] +
-					enddate[8] +
-					enddate[9];
-			}
-			var countDownDate = new Date(
-				months[parseInt(enddate[5] + enddate[6])] +
-					" " +
-					(enddate[8] + enddate[9]) +
-					", " +
-					enddate[0] +
-					enddate[1] +
-					enddate[2] +
-					enddate[3] +
-					" 0:00:00"
-			).getTime();
+			var countDownDate = new Date(enddate).getTime();
 			var now = new Date().getTime();
 
 			var distance = countDownDate - now;
@@ -114,7 +76,11 @@ function ItemPage(props) {
 				</div>
 			</div>
 
+			<div>
+				quantity : <input className="ItemPageInp"></input>
+			</div>
 			{OptionList.map((info, index) => {
+				let SelectedOptionID = 0;
 				return (
 					<div className="OptionParent" key={index}>
 						<div className="OptionName">{info[0]}</div>
@@ -122,7 +88,23 @@ function ItemPage(props) {
 							{OptionList[index].map((info2, index2) => {
 								if (index2 > 0) {
 									return (
-										<div className="OptionValue" key={index2}>
+										<div
+											className="OptionValue"
+											key={index2}
+											id={index + ":" + index2}
+											onClick={() => {
+												if (SelectedOptionID !== 0) {
+													document.getElementById(
+														SelectedOptionID
+													).style.backgroundColor = "#979696";
+												}
+
+												SelectedOptionID = index + ":" + index2;
+												document.getElementById(
+													index + ":" + index2
+												).style.backgroundColor = "#ffffff";
+											}}
+										>
 											{info2}
 										</div>
 									);
@@ -139,6 +121,9 @@ function ItemPage(props) {
 				onClick={() => {
 					Cookies.set("cart", ItemId + "*" + Cookies.get("cart"));
 					console.log(Cookies.get("cart"));
+					document.getElementById("OrderButton").innerHTML = "Added to cart!";
+					document.getElementById("OrderButton").style.backgroundColor =
+						"#2EAA2A";
 				}}
 			>
 				Add To Cart
