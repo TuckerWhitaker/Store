@@ -25,7 +25,7 @@ function Navbar() {
 					window.location.href = "http://localhost:3000/cart";
 				}}
 			>
-				cart
+				Cart
 			</button>
 		</div>
 	);

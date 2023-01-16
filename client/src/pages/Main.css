@@ -9,10 +9,20 @@
 
 	font-family: "Abhaya Libre";
 	font-size: 22px;
-	background-color: rgb(255, 255, 255);
+	background-color: rgb(230, 230, 230);
 }
 
 .Parent {
 	display: flex;
 	flex-direction: column;
+}
+
+#MainBackground {
+	height: 30vh;
+}
+
+#logo {
+	height: 45vh;
+	margin-top: -38vh;
+	margin-bottom: -7vh;
 }

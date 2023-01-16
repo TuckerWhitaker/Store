@@ -2,7 +2,7 @@
 	margin: 0;
 	width: 100%;
 	height: 5vh;
-	background-color: rgb(255, 255, 255);
+	background-color: #9c756f;
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -12,7 +12,7 @@
 	width: 30%;
 	height: 90%;
 	background-color: #4b4b4b00;
-	color: rgb(0, 0, 0);
+	color: #ffffff;
 	border-style: initial;
 	border-radius: 1px;
 	transition-duration: 500ms;

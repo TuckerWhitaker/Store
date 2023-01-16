@@ -4,7 +4,8 @@ import ItemPage from "./components/ItemPage";
 import axios, { Axios } from "axios";
 import ReactDOM from "react-dom/client";
 import React, { useEffect, useRef, useState } from "react";
-
+import logo from "./logo2.png";
+import MainBackground from "./background3.jpg";
 // get relevant item list but for now just all items
 // loop through those items and add them to the main page
 
@@ -24,6 +25,8 @@ function Main() {
 
 	return (
 		<div className="Parent">
+			<img src={MainBackground} id="MainBackground"></img>
+			<img src={logo} id="logo"></img>
 			<div className="Main" id="Main">
 				{ItemList.map((info, index) => {
 					return (
