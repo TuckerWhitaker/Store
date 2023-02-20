@@ -1,7 +1,7 @@
 import "./CartPage.css";
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 function CartPage() {
 	const itemIds = Cookies.get("cart");
@@ -68,5 +68,7 @@ function CartPage() {
 		</div>
 	);
 }
-
+export function SendOrder(input) {
+	console.log(input);
+}
 export default CartPage;

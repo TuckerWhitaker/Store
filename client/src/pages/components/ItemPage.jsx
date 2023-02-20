@@ -9,6 +9,7 @@ function ItemPage(props) {
 	const [ItemName, SetItemName] = useState("");
 	const [ItemPrice, SetItemPrice] = useState();
 	const [OptionList, SetOptionList] = useState([]);
+	const [CustomTextList, SetCustomTextList] = useState([]);
 
 	let { ItemId } = useParams();
 
@@ -47,6 +48,7 @@ function ItemPage(props) {
 				SetItemName(response.data.name);
 				SetItemPrice(response.data.price);
 				SetOptionList(response.data.options);
+				SetCustomTextList(response.data.customText);
 				SetImageId(response.data.imageNames[0]);
 
 				if (response.data.limitedTime) {
@@ -65,69 +67,82 @@ function ItemPage(props) {
 
 	return (
 		<div className="ItemPage">
-			<div id="time"></div>
-			<img className="ItemPageImage" id="Image" alt="Italian Trulli" />
-			<div className="Iteminfo">
+			<div className="ItemPageColumn">
 				<div className="ItemName" id="name">
 					{ItemName}
 				</div>
-				<div className="ItemPrice" id="price">
-					{ItemPrice}
-				</div>
-			</div>
-
-			<div>
-				quantity : <input className="ItemPageInp"></input>
-			</div>
-			{OptionList.map((info, index) => {
-				let SelectedOptionID = 0;
-				return (
-					<div className="OptionParent" key={index}>
-						<div className="OptionName">{info[0]}</div>
-						<div className="OptionContainer">
-							{OptionList[index].map((info2, index2) => {
-								if (index2 > 0) {
-									return (
-										<div
-											className="OptionValue"
-											key={index2}
-											id={index + ":" + index2}
-											onClick={() => {
-												if (SelectedOptionID !== 0) {
-													document.getElementById(
-														SelectedOptionID
-													).style.backgroundColor = "#979696";
-												}
-
-												SelectedOptionID = index + ":" + index2;
-												document.getElementById(
-													index + ":" + index2
-												).style.backgroundColor = "#ffffff";
-											}}
-										>
-											{info2}
-										</div>
-									);
-								}
-							})}
-						</div>
+				<div id="time"></div>
+				<img className="ItemPageImage" id="Image" alt="Italian Trulli" />
+				<div className="Iteminfo">
+					<div className="ItemPrice" id="price">
+						${ItemPrice}
 					</div>
-				);
-			})}
+				</div>
+				<button
+					className="ItemPageBtn"
+					id="OrderButton"
+					onClick={() => {
+						Cookies.set("cart", ItemId + "*" + Cookies.get("cart"));
+						console.log(Cookies.get("cart"));
+						document.getElementById("OrderButton").innerHTML = "Added to cart!";
+						document.getElementById("OrderButton").style.backgroundColor =
+							"#2EAA2A";
+					}}
+				>
+					Add To Cart
+				</button>
+			</div>
 
-			<button
-				className="ItemPageBtn"
-				id="OrderButton"
-				onClick={() => {
-					Cookies.set("cart", ItemId + "*" + Cookies.get("cart"));
-					console.log(Cookies.get("cart"));
-					document.getElementById("OrderButton").innerHTML = "Added to cart!";
-					document.getElementById("OrderButton").style.backgroundColor =
-						"#2EAA2A";
-				}}
-			>
-				Add To Cart
-			</button>
+			<div className="ItemPageColumn" id="ItemPageColumn2">
+				<div className="Quantity">
+					Quantity{" "}
+					<input type="number" className="QuantityInp" placeholder={1}></input>
+				</div>
+
+				{CustomTextList.map((info, index) => {
+					return (
+						<div key={"CTL" + index} className="CustomTextListInput">
+							{info}{" "}
+							<input type="text" className="CustomTextListInputIN"></input>
+						</div>
+					);
+				})}
+				{OptionList.map((info, index) => {
+					let SelectedOptionID = 0;
+					return (
+						<div className="OptionParent" key={index}>
+							<div className="OptionName">{info[0]}</div>
+							<div className="OptionContainer">
+								{OptionList[index].map((info2, index2) => {
+									if (index2 > 0) {
+										return (
+											<div
+												className="OptionValue"
+												key={index2}
+												id={index + ":" + index2}
+												onClick={() => {
+													if (SelectedOptionID !== 0) {
+														document.getElementById(
+															SelectedOptionID
+														).style.backgroundColor = "#979696";
+													}
+
+													SelectedOptionID = index + ":" + index2;
+													document.getElementById(
+														index + ":" + index2
+													).style.backgroundColor = "#ffffff";
+												}}
+											>
+												{info2}
+											</div>
+										);
+									}
+								})}
+							</div>
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 }

@@ -24,14 +24,18 @@ function CreateItem() {
 
 	//Option and Value List
 	const [OptionList, SetOptionList] = useState([]);
+	const [CustomTextList, SetCustomTextList] = useState([]);
+
 	//first of every array is name and rest is values
 	//OptionList.push([OptionName]) for every new option
 	const [ItemName, SetItemName] = useState("");
 	//selected option should be index of option
+	const [SelectedCustomText, SetSelectedCustomText] = useState();
 	const [SelectedOption, SetSelectedOption] = useState();
 	const [SelectedValue, SetSelectedValue] = useState();
 	const [ItemDescription, SetDescription] = useState("");
 	const [Price, SetPrice] = useState();
+	const [CustomTextName, SetCustomTextName] = useState("");
 	const [OptionName, SetOptionName] = useState("");
 	const [ValueName, SetValueName] = useState("");
 	const [ItemID, SetItemID] = useState();
@@ -45,6 +49,19 @@ function CreateItem() {
 		return new Promise((resolve) => setTimeout(resolve, time));
 	}
 
+	const AddCustomTextOption = () => {
+		CustomTextList.push(CustomTextName);
+		SetCustomTextList(CustomTextList);
+		forceUpdate();
+	};
+
+	const DeleteCustomTextOption = () => {
+		CustomTextList.splice(SelectedCustomText, 1);
+		SetCustomTextList(CustomTextList);
+		SetSelectedCustomText(undefined);
+		forceUpdate();
+	};
+
 	const AddOption = () => {
 		OptionList.push([OptionName]);
 		SetOptionList(OptionList);
@@ -54,6 +71,7 @@ function CreateItem() {
 	const DeleteOption = () => {
 		OptionList.splice(SelectedOption, 1);
 		SetOptionList(OptionList);
+		SetSelectedOption(undefined);
 		forceUpdate();
 	};
 
@@ -66,6 +84,7 @@ function CreateItem() {
 	const DeleteValue = () => {
 		OptionList[SelectedOption].splice(SelectedValue, 1);
 		SetOptionList(OptionList);
+		SetSelectedValue(undefined);
 		forceUpdate();
 	};
 
@@ -100,6 +119,7 @@ function CreateItem() {
 				description: ItemDescription,
 				price: Price,
 				options: OptionList,
+				customText: CustomTextList,
 				imageNames: ImageNames,
 				limitedTime: LimitedTime,
 				endDate: EndDate,
@@ -167,6 +187,7 @@ function CreateItem() {
 								description: ItemDescription,
 								price: Price,
 								options: OptionList,
+								customText: CustomTextList,
 								limitedTime: LimitedTime,
 								endDate: EndDate,
 							})
@@ -211,6 +232,62 @@ function CreateItem() {
 				</div>
 			</div>
 			<div className="CreateItemColumn">
+				<div
+					className="CreateItemOptionContainer"
+					id="CreateItemOptionContainer"
+				>
+					{CustomTextList.map((info, index) => {
+						return (
+							<button
+								className="CreateItemOption"
+								key={index}
+								id={"customtext" + index}
+								onClick={() => {
+									console.log(SelectedCustomText);
+									if (SelectedCustomText != undefined) {
+										document.getElementById(
+											"customtext" + SelectedCustomText
+										).style.backgroundColor = "rgb(200, 200, 200)";
+									}
+									document.getElementById(
+										"customtext" + index
+									).style.backgroundColor = "#FBFBFB";
+									SetSelectedCustomText(index);
+									forceUpdate();
+
+									//set value list
+								}}
+							>
+								{info}
+							</button>
+						);
+					})}
+				</div>
+				<input
+					className="CreateItemInput"
+					onChange={(e) => {
+						SetCustomTextName(e.target.value);
+					}}
+				></input>
+				<button
+					onClick={() => {
+						AddCustomTextOption();
+					}}
+					className="CreateItemBtn"
+				>
+					Add Custom Input
+				</button>
+				<button
+					onClick={() => {
+						DeleteCustomTextOption();
+					}}
+					className="CreateItemBtnDanger"
+				>
+					Delete Custom Input
+				</button>
+				{
+					//////////\\\}}
+				}
 				<div
 					className="CreateItemOptionContainer"
 					id="CreateItemOptionContainer"

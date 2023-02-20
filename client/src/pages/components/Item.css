@@ -1,7 +1,7 @@
 .Item {
-	margin: 3vw;
-	width: 40vw;
-	height: 20vh;
+	margin: 2vw;
+	width: fit-content;
+	height: fit-content;
 }
 
 .Item:hover {
@@ -9,8 +9,14 @@
 }
 
 .ItemImage {
-	width: 20vh;
+	width: 25vh;
 	border-style: solid;
 	border-radius: 2vw;
 	border-color: gray;
+}
+
+@media only screen and (max-width: 800px) {
+	.ItemImage {
+		width: 20vh;
+	}
 }

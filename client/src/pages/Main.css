@@ -1,12 +1,10 @@
 .Main {
 	display: grid;
-	grid-template-columns: auto auto;
+	grid-template-columns: auto auto auto auto auto;
 	grid-template-rows: 30vh 30vh;
 	width: 100vw;
 	height: 100vh;
-
 	justify-content: center;
-
 	font-family: "Abhaya Libre";
 	font-size: 22px;
 	background-color: rgb(230, 230, 230);
@@ -25,4 +23,10 @@
 	height: 45vh;
 	margin-top: -38vh;
 	margin-bottom: -7vh;
+}
+
+@media only screen and (max-width: 800px) {
+	.Main {
+		grid-template-columns: auto auto;
+	}
 }

@@ -1,11 +1,26 @@
 .ItemPage {
+	padding-top: 5vh;
 	overflow-x: hidden;
 	width: 100%;
-	height: 95vh;
+	height: 100vh;
 	display: flex;
-	margin-top: 2vh;
-	align-items: center;
+	align-items: top;
+	justify-content: center;
+	flex-direction: row;
+}
+
+.ItemPageColumn {
+	margin-top: 3vh;
+	width: fit-content;
+	height: fit-content;
+	display: flex;
 	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#ItemPageColumn2 {
+	align-self: center;
 }
 
 .ItemPageImage {
@@ -20,16 +35,15 @@
 }
 
 .ItemName {
-	font-size: 5vh;
-	margin: 0.5vh;
+	font-size: 4vh;
 }
 .ItemPrice {
-	font-size: 2vh;
+	font-size: 3vh;
 	margin: 0.5vh;
 }
 
 .OptionParent {
-	margin-top: 10px;
+	margin-top: 20px;
 	border-style: solid;
 	border-color: rgb(174, 174, 174);
 	border-radius: 5px;
@@ -38,9 +52,9 @@
 .OptionContainer {
 	align-items: center;
 	display: flex;
-	padding: 10px;
-	width: 80vw;
-	height: 7.5vh;
+	width: 40vw;
+	height: 5vh;
+	padding-bottom: 1vh;
 	background-color: rgb(212, 212, 212);
 	overflow-x: scroll;
 	overflow-y: hidden;
@@ -52,12 +66,14 @@
 }
 
 .OptionValue {
+	font-size: 1.25vw;
 	text-align: center;
-	border-radius: 15px;
-	min-width: 20vw;
+	padding: 3px;
+	border-radius: 5px;
+	min-width: 10vw;
 	background-color: #979696;
-	width: 20vw;
-	height: 100%;
+	width: fit-content;
+	height: fit-content;
 	margin: 5px;
 }
 
@@ -66,7 +82,7 @@
 }
 
 .ItemPageBtn {
-	width: 25vh;
+	width: 30vw;
 	height: 5vh;
 	margin-top: 1vh;
 	background-color: #9c756f;
@@ -80,6 +96,81 @@
 	color: rgb(155, 101, 36);
 }
 
-.ItemPageInp {
-	width: 5vw;
+.Quantity {
+	font-size: 1.25vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0.5vw;
+	width: fit-content;
+	height: 5vh;
+}
+.QuantityInp {
+	font-size: 1vw;
+	text-align: center;
+	width: 2vw;
+}
+
+.CustomTextListInput {
+	font-size: 2vh;
+	display: flex;
+	flex-direction: column;
+	margin: 1.5vw;
+	background-color: #9c756f;
+	width: fit-content;
+	height: 5vh;
+}
+.CustomTextListInputIN {
+	font-size: 2.5vh;
+	height: 3vh;
+	width: 30vw;
+}
+
+@media only screen and (max-width: 750px) {
+	.CustomTextListInput {
+		margin: 10px;
+	}
+
+	.CustomTextListInputIN {
+		width: 60vw;
+	}
+
+	#ItemPageColumn2 {
+		margin-bottom: 10vh;
+	}
+
+	.ItemName {
+		margin-top: 30vh;
+	}
+
+	.ItemPage {
+		flex-direction: column;
+		align-items: center;
+		padding-top: 10vh;
+	}
+
+	.ItemPageBtn {
+		width: 50vw;
+		margin-bottom: 10vw;
+	}
+
+	.OptionContainer {
+		width: 60vw;
+		height: fit-content;
+	}
+	.OptionValue {
+		min-width: 15vw;
+		font-size: 4vw;
+	}
+
+	.Quantity {
+		font-size: 4vw;
+		margin-bottom: 10vw;
+	}
+
+	.QuantityInp {
+		width: 20vw;
+		margin: 1vw;
+		font-size: 4.5vw;
+	}
 }
