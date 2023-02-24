@@ -160,4 +160,46 @@ app.post("/api/DeleteItem", async (req, res) => {
 
 app.post("/api/OrderItem", (req, res) => {
 	//get item id and other user info then add to orders table
+
+	MongoClient.connect(url, async function (err, db) {
+		if (err) throw err;
+		var dbo = db.db("store");
+
+		for (let i = 0; i < req.body.items.length; i++) {
+			var order = {
+				id: Date.now() + ":" + i,
+				name: req.body.name,
+				description: req.body.items[i].description,
+				price: req.body.items[i].price,
+				options: req.body.items[i].options,
+				customText: req.body.items[i].customText,
+				imageNames: req.body.items[i].imageNames,
+				limitedTime: req.body.items[i].limitedTime,
+				endDate: req.body.items[i].endDate,
+			};
+
+			/*
+			TODO	- Get ID and get info from DB
+			TODO	- Get Custom parameters (Custom Text, Size, Color, any other options)
+			*/
+			dbo.collection("orders").insertOne(order, function (err, result) {
+				if (err) throw err;
+				console.log("1 document inserted : orders");
+				res.send("success");
+			});
+		}
+		db.close();
+	});
+});
+
+app.post("/api/GetOrders", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		const orders = dbo.collection("orders").find();
+		var orderlist = [];
+		await orders.forEach((element) => {
+			orderlist.push(element);
+		});
+		res.send(orderlist);
+	});
 });

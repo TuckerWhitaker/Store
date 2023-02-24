@@ -5,7 +5,6 @@ import axios from "axios";
 
 function CartPage() {
 	const itemIds = Cookies.get("cart");
-
 	const [ItemIdArray, SetItemIdArray] = useState([]);
 	const [Items, SetItems] = useState([]);
 	const [EmptyCart, SetEmptyCart] = useState();
@@ -55,7 +54,18 @@ function CartPage() {
 					document.getElementById("CartTotal").innerHTML = CartTotal;
 				})}
 				<div id="CartTotal"></div>
-				<button className="OrderBtn">Proceed to Checkout</button>
+				<button
+					className="OrderBtn"
+					onClick={() => {
+						axios
+							.post("http://localhost:3001/api/OrderItem", {
+								items: Items,
+							})
+							.then((response) => {});
+					}}
+				>
+					Proceed to Checkout
+				</button>
 				<button
 					onClick={() => {
 						Cookies.set("cart", "");

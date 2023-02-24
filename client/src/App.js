@@ -6,6 +6,8 @@ import CreateItem from "./pages/components/CreateItem";
 import ItemPage from "./pages/components/ItemPage";
 import CartPage from "./pages/components/CartPage";
 import ContactPage from "./pages/components/ContactPage";
+import AdminOrder from "./pages/components/AdminOrder";
+
 import {
 	useParams,
 	BrowserRouter as Router,
@@ -28,6 +30,7 @@ function App() {
 					<Route path="/Contact" element={<ContactPage />} />
 					<Route path="/Admin" element={<AdminPage />} />
 					<Route path="/Admin/CreateItem" element={<CreateItem />} />
+					<Route path="/Admin/ManageOrders" element={<AdminOrder />} />
 					<Route path="/item/:ItemId" element={<ItemPage />} />
 				</Routes>
 			</Router>

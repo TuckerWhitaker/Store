@@ -16,7 +16,14 @@ function AdminPage() {
 				Manage Items
 			</button>
 
-			<button className="AdminBtn">Orders</button>
+			<button
+				className="AdminBtn"
+				onClick={() => {
+					window.location.href = "http://localhost:3000/Admin/ManageOrders";
+				}}
+			>
+				Orders
+			</button>
 		</div>
 	);
 }
