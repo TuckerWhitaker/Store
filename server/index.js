@@ -165,30 +165,28 @@ app.post("/api/OrderItem", (req, res) => {
 		if (err) throw err;
 		var dbo = db.db("store");
 
-		for (let i = 0; i < req.body.items.length; i++) {
+		let OrderList = [];
+		for (let i = 0; i < req.body.OrderArray.length; i++) {
 			var order = {
 				id: Date.now() + ":" + i,
-				name: req.body.name,
-				description: req.body.items[i].description,
-				price: req.body.items[i].price,
-				options: req.body.items[i].options,
-				customText: req.body.items[i].customText,
-				imageNames: req.body.items[i].imageNames,
-				limitedTime: req.body.items[i].limitedTime,
-				endDate: req.body.items[i].endDate,
+				name: req.body.OrderArray[i].ItemName,
+				price: req.body.OrderArray[i].ItemPrice,
+				customTextArray: req.body.OrderArray[i].CustomTextArray,
+				SelectedOptions: req.body.OrderArray[i].SelectedOptions,
 			};
+			OrderList.push(order);
 
-			/*
-			TODO	- Get ID and get info from DB
-			TODO	- Get Custom parameters (Custom Text, Size, Color, any other options)
-			*/
-			dbo.collection("orders").insertOne(order, function (err, result) {
-				if (err) throw err;
-				console.log("1 document inserted : orders");
-				res.send("success");
-			});
+			console.log(order);
 		}
-		db.close();
+		dbo.collection("orders").insertMany(OrderList, function (err, result) {
+			if (err) {
+				res.send("fail");
+				throw err;
+			}
+			console.log(OrderList.length + " documents inserted : orders");
+			res.send("success");
+		});
+		//db.close();
 	});
 });
 

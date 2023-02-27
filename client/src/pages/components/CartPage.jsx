@@ -4,53 +4,36 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 function CartPage() {
-	const itemIds = Cookies.get("cart");
-	const [ItemIdArray, SetItemIdArray] = useState([]);
-	const [Items, SetItems] = useState([]);
+	const [OrderArray, SetOrderArray] = useState([]);
 	const [EmptyCart, SetEmptyCart] = useState();
 	let CartTotal = 0;
 
 	useEffect(() => {
-		let id = "";
-		for (let i = 0; i < itemIds.length; i++) {
-			if (itemIds[i] == "*") {
-				ItemIdArray.push(id);
-				id = "";
-			} else {
-				id = id + itemIds[i];
-			}
+		if (JSON.parse(localStorage.getItem("Cart")) === null) {
+			console.log("PFJOPAWFOAN");
+			OrderArray.push(["P"]);
+			SetOrderArray(OrderArray);
 		}
-		axios
-			.post("http://localhost:3001/api/GetItemsWithIds", {
-				ids: ItemIdArray,
-			})
-			.then((response) => {
-				SetItems(response.data);
-				if (response.data.length < 1) {
-					SetEmptyCart("Your cart is empty");
-				} else {
-					SetEmptyCart("");
-				}
-			});
+		console.log(OrderArray);
+		SetOrderArray(JSON.parse(localStorage.getItem("Cart")));
 	}, []);
 
 	return (
 		<div className="CartParent">
 			<div className="ItemList">
-				{EmptyCart}
-				{Items.map((info, index) => {
+				{OrderArray.map((info, index) => {
 					return (
 						<div className="ItemListChild" key={index}>
 							<div className="ItemColumn">Image</div>
-							<div className="ItemColumn">{info.name}</div>
-							<div className="ItemColumn">{info.price}</div>
+							<div className="ItemColumn">{info.ItemName}</div>
+							<div className="ItemColumn">{info.ItemPrice}</div>
 						</div>
 					);
 				})}
 			</div>
 			<div className="OrderInfo">
-				{Items.map((info, index) => {
-					CartTotal += parseInt(info.price);
+				{OrderArray.map((info, index) => {
+					CartTotal += parseInt(info.ItemPrice);
 					document.getElementById("CartTotal").innerHTML = CartTotal;
 				})}
 				<div id="CartTotal"></div>
@@ -59,16 +42,23 @@ function CartPage() {
 					onClick={() => {
 						axios
 							.post("http://localhost:3001/api/OrderItem", {
-								items: Items,
+								OrderArray: OrderArray,
 							})
-							.then((response) => {});
+							.then((response) => {
+								if (response.data == "success") {
+									localStorage.clear("Cart");
+									window.location.href = "http://localhost:3000/cart";
+								} else if (response.data == "fail") {
+									alert("Fail");
+								}
+							});
 					}}
 				>
 					Proceed to Checkout
 				</button>
 				<button
 					onClick={() => {
-						Cookies.set("cart", "");
+						localStorage.clear("Cart");
 						window.location.href = "http://localhost:3000/cart";
 					}}
 				>

@@ -5,6 +5,9 @@ import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
 
 function ItemPage(props) {
+	const [CustomTextArray, SetCustomTextArray] = useState([]);
+	const [SelectedOptions, SetSelectedOptions] = useState([]);
+
 	const [ImageId, SetImageId] = useState();
 	const [ItemName, SetItemName] = useState("");
 	const [ItemPrice, SetItemPrice] = useState();
@@ -82,8 +85,32 @@ function ItemPage(props) {
 					className="ItemPageBtn"
 					id="OrderButton"
 					onClick={() => {
-						Cookies.set("cart", ItemId + "*" + Cookies.get("cart"));
-						console.log(Cookies.get("cart"));
+						let order = {
+							ItemName: ItemName,
+							ItemPrice: ItemPrice,
+							CustomTextArray: [],
+							SelectedOptions: [],
+						};
+						for (let i = 0; i < CustomTextArray.length; i++) {
+							order.CustomTextArray.push(
+								CustomTextList[i] + " : " + CustomTextArray[i]
+							);
+						}
+						for (let i = 0; i < SelectedOptions.length; i++) {
+							order.SelectedOptions.push(
+								OptionList[i][0] + " : " + SelectedOptions[i]
+							);
+						}
+
+						if (localStorage.getItem("Cart") === null) {
+							localStorage.setItem("Cart", JSON.stringify([order]));
+						} else {
+							console.log(JSON.parse(localStorage.getItem("Cart")));
+							let Temp = JSON.parse(localStorage.getItem("Cart"));
+							Temp.push(order);
+							localStorage.setItem("Cart", JSON.stringify(Temp));
+						}
+
 						document.getElementById("OrderButton").innerHTML = "Added to cart!";
 						document.getElementById("OrderButton").style.backgroundColor =
 							"#2EAA2A";
@@ -103,7 +130,15 @@ function ItemPage(props) {
 					return (
 						<div key={"CTL" + index} className="CustomTextListInput">
 							{info}{" "}
-							<input type="text" className="CustomTextListInputIN"></input>
+							<input
+								type="text"
+								className="CustomTextListInputIN"
+								onChange={(e) => {
+									CustomTextArray[index] = e.target.value;
+									SetCustomTextArray(CustomTextArray);
+									console.log(CustomTextArray);
+								}}
+							></input>
 						</div>
 					);
 				})}
@@ -126,7 +161,9 @@ function ItemPage(props) {
 															SelectedOptionID
 														).style.backgroundColor = "#979696";
 													}
-
+													SelectedOptions[index] = info2;
+													SetSelectedOptions(SelectedOptions);
+													console.log(SelectedOptions);
 													SelectedOptionID = index + ":" + index2;
 													document.getElementById(
 														index + ":" + index2
