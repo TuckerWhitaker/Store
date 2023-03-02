@@ -125,7 +125,7 @@ app.post("/api/ClearItems", async (req, res) => {
 	MongoClient.connect(url, async function (err, db) {
 		var dbo = db.db("store");
 		const item = dbo.collection("items").deleteMany({});
-		console.log("Cleared all items from db");
+		console.log("Cleared all items from items collection");
 	});
 });
 
@@ -187,6 +187,14 @@ app.post("/api/OrderItem", (req, res) => {
 			res.send("success");
 		});
 		//db.close();
+	});
+});
+
+app.post("/api/DeleteOrders", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		dbo.collection("orders").deleteMany({});
+		console.log("Cleared all items from orders collection");
 	});
 });
 

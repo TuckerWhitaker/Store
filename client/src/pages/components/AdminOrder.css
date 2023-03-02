@@ -1,0 +1,16 @@
+.AdminOrder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.AdminOrderItem {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+td {
+	border-style: solid;
+	border-width: 1px;
+}
