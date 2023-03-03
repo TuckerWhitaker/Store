@@ -4,6 +4,9 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 function CartPage() {
+	const [, updateState] = React.useState();
+	const forceUpdate = React.useCallback(() => updateState({}), []);
+
 	const [OrderArray, SetOrderArray] = useState([]);
 	const [EmptyCart, SetEmptyCart] = useState();
 	let CartTotal = 0;
@@ -11,16 +14,20 @@ function CartPage() {
 	useEffect(() => {
 		if (JSON.parse(localStorage.getItem("Cart")) === null) {
 			console.log("PFJOPAWFOAN");
-			OrderArray.push(["P"]);
-			SetOrderArray(OrderArray);
+			SetOrderArray([]);
+			SetEmptyCart("Your cart is currently empty!");
+			forceUpdate();
+		} else {
+			SetOrderArray(JSON.parse(localStorage.getItem("Cart")));
+			SetEmptyCart("");
 		}
 		console.log(OrderArray);
-		SetOrderArray(JSON.parse(localStorage.getItem("Cart")));
 	}, []);
 
 	return (
 		<div className="CartParent">
 			<div className="ItemList">
+				{EmptyCart}
 				{OrderArray.map((info, index) => {
 					return (
 						<div className="ItemListChild" key={index}>
