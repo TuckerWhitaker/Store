@@ -40,7 +40,8 @@ function CartPage() {
 			</div>
 			<div className="OrderInfo">
 				{OrderArray.map((info, index) => {
-					CartTotal += parseInt(info.ItemPrice);
+					CartTotal += parseFloat(info.ItemPrice);
+					CartTotal = Math.round(CartTotal * 100) / 100;
 					document.getElementById("CartTotal").innerHTML = CartTotal;
 				})}
 				<div id="CartTotal"></div>

@@ -166,9 +166,10 @@ app.post("/api/OrderItem", (req, res) => {
 		var dbo = db.db("store");
 
 		let OrderList = [];
+		let orderid = Date.now();
 		for (let i = 0; i < req.body.OrderArray.length; i++) {
 			var order = {
-				id: Date.now() + ":" + i,
+				id: orderid + ":" + i,
 				name: req.body.OrderArray[i].ItemName,
 				price: req.body.OrderArray[i].ItemPrice,
 				customTextArray: req.body.OrderArray[i].CustomTextArray,

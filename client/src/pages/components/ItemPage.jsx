@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
+import ImageCarousel from "./imageCarousel";
 
 function ItemPage(props) {
 	const [CustomTextArray, SetCustomTextArray] = useState([]);
@@ -13,11 +14,11 @@ function ItemPage(props) {
 	const [ItemPrice, SetItemPrice] = useState();
 	const [OptionList, SetOptionList] = useState([]);
 	const [CustomTextList, SetCustomTextList] = useState([]);
+	const [ImageList, SetImageList] = useState([]);
 
 	let { ItemId } = useParams();
 
 	async function UpdateDate(enddate) {
-		console.log(enddate);
 		var x = setInterval(function () {
 			var countDownDate = new Date(enddate).getTime();
 			var now = new Date().getTime();
@@ -55,12 +56,12 @@ function ItemPage(props) {
 				SetImageId(response.data.imageNames[0]);
 
 				if (response.data.limitedTime) {
-					console.log(response.data.endDate);
 					UpdateDate(response.data.endDate);
 				}
-				document.getElementById("Image").src =
+				/*document.getElementById("Image").src =
 					"http://localhost:3001/api/getImage?id=" +
-					response.data.imageNames[0];
+					response.data.imageNames[0];*/
+				SetImageList(response.data.imageNames);
 			});
 	};
 
@@ -75,7 +76,8 @@ function ItemPage(props) {
 					{ItemName}
 				</div>
 				<div id="time"></div>
-				<img className="ItemPageImage" id="Image" alt="Italian Trulli" />
+
+				<ImageCarousel images={ImageList} id="ImageCarousel"></ImageCarousel>
 				<div className="Iteminfo">
 					<div className="ItemPrice" id="price">
 						${ItemPrice}
