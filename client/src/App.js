@@ -7,6 +7,7 @@ import ItemPage from "./pages/components/ItemPage";
 import CartPage from "./pages/components/CartPage";
 import ContactPage from "./pages/components/ContactPage";
 import AdminOrder from "./pages/components/AdminOrder";
+import Categories from "./pages/components/Categories";
 
 import {
 	useParams,
@@ -22,7 +23,9 @@ function App() {
 				rel="stylesheet"
 				href="https://fonts.googleapis.com/css?family=Abhaya Libre"
 			/>
+
 			<Navbar></Navbar>
+			<Categories></Categories>
 			<Router>
 				<Routes>
 					<Route path="/" element={<Main />} />

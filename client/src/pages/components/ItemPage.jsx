@@ -92,6 +92,7 @@ function ItemPage(props) {
 							ItemPrice: ItemPrice,
 							CustomTextArray: [],
 							SelectedOptions: [],
+							ImageList: ImageList,
 						};
 						for (let i = 0; i < CustomTextArray.length; i++) {
 							order.CustomTextArray.push(

@@ -1,0 +1,24 @@
+.Categories {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(230, 230, 230);
+	width: 100vw;
+	height: 5vh;
+}
+
+.CatBtn {
+	margin-top: 2vh;
+	transition-duration: 100ms;
+	color: rgb(126, 126, 126);
+	user-select: none;
+	font-size: larger;
+	width: 10%;
+	height: 100%;
+}
+
+.CatBtn:hover {
+	color: black;
+	text-decoration: underline;
+	cursor: pointer;
+}

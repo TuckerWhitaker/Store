@@ -1,15 +1,15 @@
 .Navbar {
 	width: 100%;
 	height: fit-content;
-	background-color: #9c756f;
+	background-color: #c49c94;
 	display: flex;
-	align-items: center;
+	align-items: baseline;
 	justify-content: space-evenly;
 }
 
 .NavBarButton {
 	width: 30%;
-	height: 90%;
+	height: 30%;
 	background-color: #4b4b4b00;
 	color: #ffffff;
 	border-style: initial;

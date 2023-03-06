@@ -31,7 +31,14 @@ function CartPage() {
 				{OrderArray.map((info, index) => {
 					return (
 						<div className="ItemListChild" key={index}>
-							<div className="ItemColumn">Image</div>
+							<div className="ItemColumn">
+								<img
+									className="ItemColumnImage"
+									src={
+										"http://localhost:3001/api/getImage?id=" + info.ImageList[0]
+									}
+								></img>
+							</div>
 							<div className="ItemColumn">{info.ItemName}</div>
 							<div className="ItemColumn">{info.ItemPrice}</div>
 						</div>

@@ -1,6 +1,20 @@
 import "./ImageCarousel.css";
 
 function imageCarousel(props) {
+	let ImageList = props.images;
+
+	let i = 0;
+	/*
+	let AutoScroll = setInterval(function () {
+		if (i > ImageList.length) {
+			i = 0;
+		}
+		document.getElementById("ICMainImage").src =
+			"http://localhost:3001/api/getImage?id=" + ImageList[i];
+
+		i++;
+	}, 5000);*/
+
 	return (
 		<div className="ImageCarousel">
 			<img
@@ -9,7 +23,7 @@ function imageCarousel(props) {
 				src={"http://localhost:3001/api/getImage?id=" + props.images[0]}
 			></img>
 			<div className="ICPreviewParent">
-				{props.images.map((info, index) => {
+				{ImageList.map((info, index) => {
 					return (
 						<img
 							className="ICpreviewimage"
