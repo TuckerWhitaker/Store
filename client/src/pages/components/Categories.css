@@ -5,15 +5,18 @@
 	background-color: rgb(230, 230, 230);
 	width: 100vw;
 	height: 5vh;
+	padding-bottom: 1vh;
 }
 
 .CatBtn {
+	background-color: transparent;
+	border-color: transparent;
 	margin-top: 2vh;
 	transition-duration: 100ms;
 	color: rgb(126, 126, 126);
 	user-select: none;
-	font-size: larger;
-	width: 10%;
+	font-size: 2vh;
+	width: fit-content;
 	height: 100%;
 }
 

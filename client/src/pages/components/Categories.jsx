@@ -1,12 +1,15 @@
-import "./Categories.css";
 import React, { useState } from "react";
+import "./Categories.css";
 
 function Categories() {
 	const [SelectedCategory, SetSelectedCategory] = useState("CatBtn" + 0);
+	const [CategoriesList, SetCategoriesList] = useState();
+
+	//Categories List map
 
 	return (
 		<div className="Categories">
-			<div
+			<button
 				className="CatBtn"
 				id={"CatBtn" + 0}
 				onClick={() => {
@@ -18,8 +21,8 @@ function Categories() {
 				}}
 			>
 				Category
-			</div>
-			<div
+			</button>
+			<button
 				className="CatBtn"
 				id={"CatBtn" + 1}
 				onClick={() => {
@@ -31,8 +34,8 @@ function Categories() {
 				}}
 			>
 				Category
-			</div>
-			<div
+			</button>
+			<button
 				className="CatBtn"
 				id={"CatBtn" + 2}
 				onClick={() => {
@@ -44,8 +47,8 @@ function Categories() {
 				}}
 			>
 				Category
-			</div>
-			<div
+			</button>
+			<button
 				className="CatBtn"
 				id={"CatBtn" + 3}
 				onClick={() => {
@@ -57,7 +60,7 @@ function Categories() {
 				}}
 			>
 				Category
-			</div>
+			</button>
 		</div>
 	);
 }

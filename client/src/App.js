@@ -1,19 +1,18 @@
 import "./App.css";
-import Main from "./pages/Main.js";
-import Navbar from "./pages/Navbar";
 import AdminPage from "./pages/AdminPage";
-import CreateItem from "./pages/components/CreateItem";
-import ItemPage from "./pages/components/ItemPage";
+import AdminOrder from "./pages/components/AdminOrder";
 import CartPage from "./pages/components/CartPage";
 import ContactPage from "./pages/components/ContactPage";
-import AdminOrder from "./pages/components/AdminOrder";
-import Categories from "./pages/components/Categories";
+import CreateItem from "./pages/components/CreateItem";
+import ItemPage from "./pages/components/ItemPage";
+import Main from "./pages/Main.js";
+import Navbar from "./pages/Navbar";
 
 import {
-	useParams,
 	BrowserRouter as Router,
-	Routes,
 	Route,
+	Routes,
+	useParams,
 } from "react-router-dom";
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
 			/>
 
 			<Navbar></Navbar>
-			<Categories></Categories>
+
 			<Router>
 				<Routes>
 					<Route path="/" element={<Main />} />

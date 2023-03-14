@@ -1,9 +1,10 @@
-import "./Main.css";
+import axios, { Axios } from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom/client";
+import Categories from "./components/Categories";
 import Item from "./components/Item";
 import ItemPage from "./components/ItemPage";
-import axios, { Axios } from "axios";
-import ReactDOM from "react-dom/client";
-import React, { useEffect, useRef, useState } from "react";
+import "./Main.css";
 
 // get relevant item list but for now just all items
 // loop through those items and add them to the main page
@@ -24,6 +25,8 @@ function Main() {
 
 	return (
 		<div className="Parent">
+			<Categories></Categories>
+
 			<div className="Main" id="Main">
 				{ItemList.map((info, index) => {
 					return (

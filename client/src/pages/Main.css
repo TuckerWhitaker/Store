@@ -1,7 +1,7 @@
 .Main {
 	display: grid;
 	grid-template-columns: auto auto auto auto auto;
-	grid-template-rows: 30vh 30vh;
+	grid-template-rows: 40vh 30vh;
 	width: 100vw;
 	height: 100vh;
 	justify-content: center;
