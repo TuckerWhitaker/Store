@@ -1,0 +1,13 @@
+.AdminPage {
+	background-color: rgb(237, 237, 237);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+}
+
+input {
+	width: fit-content;
+	height: fit-content;
+	font-size: 10px;
+}
