@@ -1,0 +1,23 @@
+.AdminCreateItemTest {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.AdminDropDown {
+	width: 50%;
+	background-color: rgb(217, 217, 217);
+}
+
+.AdminDropDownHeader {
+	width: 100%;
+	background-color: rgb(255, 255, 255);
+}
+
+.AdminDropDownContent {
+	width: 100%;
+	height: 100px;
+	transition-duration: 500ms;
+	background-color: rgb(255, 255, 255);
+}

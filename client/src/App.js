@@ -5,6 +5,7 @@ import {
 	useParams,
 } from "react-router-dom";
 import "./App.css";
+import AdminCreateItemTest from "./pages/components/AdminCreateItemTest";
 import AdminOrder from "./pages/components/AdminOrder";
 import AdminPage from "./pages/components/AdminPage";
 import CartPage from "./pages/components/CartPage";
@@ -30,6 +31,7 @@ function App() {
 					<Route path="/Cart" element={<CartPage />} />
 					<Route path="/Contact" element={<ContactPage />} />
 					<Route path="/Admin" element={<AdminPage />} />
+					<Route path="/Admin/Test" element={<AdminCreateItemTest />} />
 					<Route path="/Admin/CreateItem" element={<CreateItem />} />
 					<Route path="/Admin/ManageOrders" element={<AdminOrder />} />
 					<Route path="/item/:ItemId" element={<ItemPage />} />
