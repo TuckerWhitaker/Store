@@ -2,6 +2,16 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+	height: 95vh;
+}
+
+.AdminColumn {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex-direction: column;
 }
 
@@ -16,8 +26,23 @@
 }
 
 .AdminDropDownContent {
+	border-style: solid;
+	overflow: hidden;
+	border-width: 1px;
 	width: 100%;
-	height: 100px;
+	height: fit-content;
 	transition-duration: 500ms;
 	background-color: rgb(255, 255, 255);
+}
+
+.AdminOptionName {
+	font-size: 15px;
+}
+
+.AdminOptionValue {
+	font-size: 10px;
+}
+
+.AdminItemListItem {
+	margin: 0.5vh;
 }

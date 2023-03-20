@@ -1,9 +1,9 @@
-import "./ItemPage.css";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ImageCarousel from "./imageCarousel";
+import "./ItemPage.css";
 
 function ItemPage(props) {
 	const [CustomTextArray, SetCustomTextArray] = useState([]);
