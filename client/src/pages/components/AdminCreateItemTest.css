@@ -46,3 +46,38 @@
 .AdminItemListItem {
 	margin: 0.5vh;
 }
+
+.AdminItemImage {
+	width: max-content;
+	height: 50px;
+}
+
+.AdminItemImageParent {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#AdminDropDownContent3 {
+	display: flex;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+.AdminItemImageDelete {
+	background-color: rgb(255, 94, 94);
+	font-size: 0.5vh;
+}
+
+.AdminItemImageDelete:hover {
+	background-color: rgb(255, 0, 0);
+}
+
+.AdminItemImageDelete:active {
+	background-color: rgb(137, 36, 36);
+}
+
+.AdminItemImageBtn {
+	font-size: 0.6vw;
+}

@@ -17,7 +17,7 @@ function AdminCreateItemTest() {
 		limitedTime: "",
 		name: "",
 		options: [],
-		price: null,
+		price: 0,
 	});
 
 	const GetItemList = () => {
@@ -52,11 +52,22 @@ function AdminCreateItemTest() {
 						Basic Information
 					</button>
 					<div className="AdminDropDownContent" id="AdminDropDownContent">
+						<div>ID: {selectedItem.id}</div>
 						Name:
 						<input
 							value={selectedItem.name}
 							onChange={(e) => {
 								selectedItem.name = e.target.value;
+								SetSelectedItem(selectedItem);
+								forceUpdate();
+							}}
+						></input>
+						<br />
+						Price:
+						<input
+							value={selectedItem.price}
+							onChange={(e) => {
+								selectedItem.price = e.target.value;
 								SetSelectedItem(selectedItem);
 								forceUpdate();
 							}}
@@ -137,7 +148,49 @@ function AdminCreateItemTest() {
 						Limited Time
 					</button>
 					<div className="AdminDropDownContent" id="AdminDropDownContent2">
-						content
+						End Date:
+						<input
+							type="date"
+							value={selectedItem.endDate}
+							onChange={(e) => {
+								selectedItem.endDate = e.target.value;
+								SetSelectedItem(selectedItem);
+								forceUpdate();
+							}}
+						></input>
+					</div>
+				</div>
+				<div className="AdminDropDown">
+					<button
+						className="AdminDropDownHeader"
+						onClick={() => {
+							if (AdminDropDownStates[3] === true) {
+								document.getElementById("AdminDropDownContent3").style.height =
+									"0px";
+								AdminDropDownStates[3] = false;
+							} else if (AdminDropDownStates[3] === false) {
+								document.getElementById("AdminDropDownContent3").style.height =
+									"fit-content";
+								AdminDropDownStates[3] = true;
+							}
+						}}
+					>
+						Images
+					</button>
+					<div className="AdminDropDownContent" id="AdminDropDownContent3">
+						{selectedItem.imageNames.map((info, index) => {
+							return (
+								<div key={index} className="AdminItemImageParent">
+									<img
+										className="AdminItemImage"
+										src={"http://localhost:3001/api/getImage?id=" + info}
+									></img>
+									<button className="AdminItemImageDelete">X</button>
+
+									<input type="file" className="AdminItemImageBtn"></input>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			</div>
