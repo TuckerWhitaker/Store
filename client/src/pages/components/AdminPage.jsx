@@ -28,6 +28,7 @@ function AdminPage() {
 
 						<td>Images</td>
 						<td>LimitedTimeDate</td>
+						<td>Status</td>
 					</tr>
 					{ItemList.map((item, index) => {
 						return (

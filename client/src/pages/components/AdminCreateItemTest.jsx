@@ -7,6 +7,7 @@ function AdminCreateItemTest() {
 
 	let AdminDropDownStates = [true, true, true, true, true, true];
 
+	const [ImageFiles, SetImageFiles] = useState([]);
 	const [ItemList, SetItemList] = useState([]);
 	const [selectedItem, SetSelectedItem] = useState({
 		customText: [""],
@@ -30,6 +31,46 @@ function AdminCreateItemTest() {
 		GetItemList();
 		console.log(ItemList);
 	}, []);
+
+	async function CreateNewItem() {
+		let ImageNames = [];
+		for (let i = 0; i < ImageFiles.length; i++) {
+			await delay(1);
+			let ImageName = Date.now();
+			ImageNames.push(ImageName);
+			let data = new FormData();
+			data.append("file", ImageFiles[i], ImageName);
+
+			axios
+				.post("http://localhost:3001/api/uploadImage", data, {
+					headers: {
+						accept: "application/json",
+						"Accept-Language": "en-US,en;q=0.8",
+						"Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+					},
+				})
+				.then((response) => {
+					//handle success
+				})
+				.catch((error) => {
+					//handle error
+				});
+		}
+
+		axios
+			.post("http://localhost:3001/api/CreateItem", {
+				name: selectedItem.name,
+				price: selectedItem.price,
+				options: selectedItem.options,
+				customText: selectedItem.customText,
+				imageNames: selectedItem.imageNames,
+				limitedTime: selectedItem.limitedTime,
+				endDate: selectedItem.endDate,
+			})
+			.then(() => {
+				window.location.reload();
+			});
+	}
 
 	return (
 		<div className="AdminCreateItemTest">
@@ -124,10 +165,30 @@ function AdminCreateItemTest() {
 												);
 											}
 										})}
+										<button
+											className="AdminCreateItemAddBtn"
+											onClick={() => {
+												selectedItem.options[index].push("");
+												SetSelectedItem(selectedItem);
+												forceUpdate();
+											}}
+										>
+											Add Value
+										</button>
 									</div>
 								</div>
 							);
 						})}
+						<button
+							className="AdminCreateItemAddBtnOption"
+							onClick={() => {
+								selectedItem.options.push([""]);
+								SetSelectedItem(selectedItem);
+								forceUpdate();
+							}}
+						>
+							Add Option
+						</button>
 					</div>
 				</div>
 				<div className="AdminDropDown">
@@ -182,15 +243,55 @@ function AdminCreateItemTest() {
 							return (
 								<div key={index} className="AdminItemImageParent">
 									<img
+										id={"AdminItemImage" + index}
 										className="AdminItemImage"
 										src={"http://localhost:3001/api/getImage?id=" + info}
 									></img>
-									<button className="AdminItemImageDelete">X</button>
+									<button
+										className="AdminItemImageDelete"
+										onClick={() => {
+											selectedItem.imageNames.splice(index, 1);
+											SetSelectedItem(selectedItem);
+											forceUpdate();
+										}}
+									>
+										X
+									</button>
 
-									<input type="file" className="AdminItemImageBtn"></input>
+									<input
+										type="file"
+										className="AdminItemImageBtn"
+										onChange={(event) => {
+											if (event.target.files && event.target.files[0]) {
+												let reader = new FileReader();
+												reader.onload = (e) => {
+													document.getElementById(
+														"AdminItemImage" + index
+													).src = e.target.result;
+												};
+												reader.readAsDataURL(event.target.files[0]);
+											}
+
+											selectedItem.imageNames[index] = event.target.files[0];
+											ImageFiles[index] = event.target.files[0];
+											SetImageFiles(ImageFiles);
+											SetSelectedItem(selectedItem);
+											forceUpdate();
+										}}
+									></input>
 								</div>
 							);
 						})}
+						<button
+							className="AdminCreateItemAddBtn"
+							onClick={() => {
+								selectedItem.imageNames.push("0");
+								SetSelectedItem(selectedItem);
+								forceUpdate();
+							}}
+						>
+							Add Image
+						</button>
 					</div>
 				</div>
 			</div>
@@ -209,6 +310,11 @@ function AdminCreateItemTest() {
 						</button>
 					);
 				})}
+
+				<div className="AdminCreateItemButtonPanel">
+					<button>Create Item</button>
+					<button>Update Item</button>
+				</div>
 			</div>
 		</div>
 	);
