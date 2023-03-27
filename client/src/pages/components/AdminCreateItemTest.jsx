@@ -5,6 +5,10 @@ function AdminCreateItemTest() {
 	const [, updateState] = React.useState();
 	const forceUpdate = React.useCallback(() => updateState({}), []);
 
+	function delay(time) {
+		return new Promise((resolve) => setTimeout(resolve, time));
+	}
+
 	let AdminDropDownStates = [true, true, true, true, true, true];
 
 	const [ImageFiles, SetImageFiles] = useState([]);
@@ -19,6 +23,7 @@ function AdminCreateItemTest() {
 		name: "",
 		options: [],
 		price: 0,
+		categories: [],
 	});
 
 	const GetItemList = () => {
@@ -31,6 +36,10 @@ function AdminCreateItemTest() {
 		GetItemList();
 		console.log(ItemList);
 	}, []);
+
+	const ClearItems = () => {
+		axios.post("http://localhost:3001/api/ClearItems");
+	};
 
 	async function CreateNewItem() {
 		let ImageNames = [];
@@ -66,6 +75,7 @@ function AdminCreateItemTest() {
 				imageNames: selectedItem.imageNames,
 				limitedTime: selectedItem.limitedTime,
 				endDate: selectedItem.endDate,
+				categories: selectedItem.categories,
 			})
 			.then(() => {
 				window.location.reload();
@@ -294,7 +304,51 @@ function AdminCreateItemTest() {
 						</button>
 					</div>
 				</div>
+				<div className="AdminDropDown">
+					<button
+						className="AdminDropDownHeader"
+						onClick={() => {
+							if (AdminDropDownStates[4] === true) {
+								document.getElementById("AdminDropDownContent4").style.height =
+									"0px";
+								AdminDropDownStates[4] = false;
+							} else if (AdminDropDownStates[4] === false) {
+								document.getElementById("AdminDropDownContent4").style.height =
+									"fit-content";
+								AdminDropDownStates[4] = true;
+							}
+						}}
+					>
+						Categories
+					</button>
+					{selectedItem.categories.map((category, index) => {
+						return (
+							<input
+								key={"Category" + index}
+								value={category}
+								onChange={(e) => {
+									selectedItem.categories[index] = e.target.value;
+									SetSelectedItem(selectedItem);
+									forceUpdate();
+								}}
+							></input>
+						);
+					})}
+					<div className="AdminDropDownContent" id="AdminDropDownContent4">
+						<button
+							className="AdminCreateItemAddBtn"
+							onClick={() => {
+								selectedItem.categories.push("");
+								SetSelectedItem(selectedItem);
+								forceUpdate();
+							}}
+						>
+							Add Category
+						</button>
+					</div>
+				</div>
 			</div>
+
 			<div className="AdminColumn">
 				{ItemList.map((info, index) => {
 					return (
@@ -312,8 +366,21 @@ function AdminCreateItemTest() {
 				})}
 
 				<div className="AdminCreateItemButtonPanel">
-					<button>Create Item</button>
+					<button
+						onClick={() => {
+							CreateNewItem();
+						}}
+					>
+						Create Item
+					</button>
 					<button>Update Item</button>
+					<button
+						onClick={() => {
+							ClearItems();
+						}}
+					>
+						Delete All Items
+					</button>
 				</div>
 			</div>
 		</div>

@@ -56,17 +56,9 @@ app.post("/api/CreateItem", async (req, res) => {
 	MongoClient.connect(url, async function (err, db) {
 		if (err) throw err;
 		var dbo = db.db("store");
-		var item = {
-			id: Date.now(),
-			name: req.body.name,
-			description: req.body.description,
-			price: req.body.price,
-			options: req.body.options,
-			customText: req.body.customText,
-			imageNames: req.body.imageNames,
-			limitedTime: req.body.limitedTime,
-			endDate: req.body.endDate,
-		};
+
+		var item = req.body;
+		item.id = Date.now();
 
 		console.log(item);
 		dbo.collection("items").insertOne(item, function (err, result) {
@@ -143,6 +135,7 @@ app.post("/api/UpdateItem", async (req, res) => {
 					customText: req.body.customText,
 					limitedTime: req.body.limitedTime,
 					endDate: req.body.endDate,
+					categories: req.body.categories,
 				},
 			}
 		);
