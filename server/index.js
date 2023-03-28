@@ -44,8 +44,7 @@ app.post("/api/uploadImage", upload.single("file"), (req, res) => {
 });
 
 app.get("/api/getImage", (req, res) => {
-	console.log(req.body);
-	//res.sendFile("F:/WebDev/Store/server/uploads/1672765674203.png");
+	console.log(req.query);
 	res.sendFile("F:/WebDev/Store/server/uploads/" + req.query.id + ".png");
 });
 

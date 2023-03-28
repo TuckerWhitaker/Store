@@ -55,12 +55,10 @@ function ItemPage(props) {
 				SetCustomTextList(response.data.customText);
 				SetImageId(response.data.imageNames[0]);
 
-				if (response.data.limitedTime) {
+				if (response.data.endDate) {
 					UpdateDate(response.data.endDate);
 				}
-				/*document.getElementById("Image").src =
-					"http://localhost:3001/api/getImage?id=" +
-					response.data.imageNames[0];*/
+
 				SetImageList(response.data.imageNames);
 			});
 	};

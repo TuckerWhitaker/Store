@@ -14,7 +14,7 @@ function AdminCreateItemTest() {
 	const [ImageFiles, SetImageFiles] = useState([]);
 	const [ItemList, SetItemList] = useState([]);
 	const [selectedItem, SetSelectedItem] = useState({
-		customText: [""],
+		customText: [],
 		description: "w",
 		endDate: "",
 		id: null,
@@ -72,7 +72,7 @@ function AdminCreateItemTest() {
 				price: selectedItem.price,
 				options: selectedItem.options,
 				customText: selectedItem.customText,
-				imageNames: selectedItem.imageNames,
+				imageNames: ImageNames,
 				limitedTime: selectedItem.limitedTime,
 				endDate: selectedItem.endDate,
 				categories: selectedItem.categories,
@@ -199,6 +199,32 @@ function AdminCreateItemTest() {
 						>
 							Add Option
 						</button>
+
+						{selectedItem.customText.map((info, index) => {
+							return (
+								<input
+									key={"CTN" + index}
+									type="text"
+									placeholder="Custom Text Name"
+									value={info}
+									onChange={(e) => {
+										selectedItem.customText[index] = e.target.value;
+										SetSelectedItem(selectedItem);
+										forceUpdate();
+									}}
+								></input>
+							);
+						})}
+						<button
+							className="AdminCreateItemAddBtnOption"
+							onClick={() => {
+								selectedItem.customText.push([""]);
+								SetSelectedItem(selectedItem);
+								forceUpdate();
+							}}
+						>
+							Add Custom Text Input
+						</button>
 					</div>
 				</div>
 				<div className="AdminDropDown">
@@ -269,6 +295,7 @@ function AdminCreateItemTest() {
 									</button>
 
 									<input
+										name="file"
 										type="file"
 										className="AdminItemImageBtn"
 										onChange={(event) => {
@@ -295,7 +322,7 @@ function AdminCreateItemTest() {
 						<button
 							className="AdminCreateItemAddBtn"
 							onClick={() => {
-								selectedItem.imageNames.push("0");
+								selectedItem.imageNames.push("");
 								SetSelectedItem(selectedItem);
 								forceUpdate();
 							}}
@@ -321,20 +348,22 @@ function AdminCreateItemTest() {
 					>
 						Categories
 					</button>
-					{selectedItem.categories.map((category, index) => {
-						return (
-							<input
-								key={"Category" + index}
-								value={category}
-								onChange={(e) => {
-									selectedItem.categories[index] = e.target.value;
-									SetSelectedItem(selectedItem);
-									forceUpdate();
-								}}
-							></input>
-						);
-					})}
+
 					<div className="AdminDropDownContent" id="AdminDropDownContent4">
+						{selectedItem.categories.map((category, index) => {
+							return (
+								<input
+									key={"Category" + index}
+									value={category}
+									onChange={(e) => {
+										selectedItem.categories[index] = e.target.value;
+										SetSelectedItem(selectedItem);
+										forceUpdate();
+									}}
+								></input>
+							);
+						})}
+
 						<button
 							className="AdminCreateItemAddBtn"
 							onClick={() => {
@@ -373,7 +402,54 @@ function AdminCreateItemTest() {
 					>
 						Create Item
 					</button>
-					<button>Update Item</button>
+					<button
+						onClick={() => {
+							let ImageNames = [];
+							for (let i = 0; i < ImageFiles.length; i++) {
+								//might need a delay here
+								let ImageName = Date.now();
+								ImageNames.push(ImageName);
+								let data = new FormData();
+								data.append("file", ImageFiles[i], ImageName);
+
+								axios
+									.post("http://localhost:3001/api/uploadImage", data, {
+										headers: {
+											accept: "application/json",
+											"Accept-Language": "en-US,en;q=0.8",
+											"Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+										},
+									})
+									.then((response) => {
+										//handle success
+									})
+									.catch((error) => {
+										//handle error
+									});
+							}
+
+							axios
+								.post("http://localhost:3001/api/UpdateItem", selectedItem)
+								.then(() => {
+									window.location.reload();
+								});
+						}}
+					>
+						Update Item
+					</button>
+					<button
+						onClick={() => {
+							axios
+								.post("http://localhost:3001/api/DeleteItem", {
+									id: selectedItem.id,
+								})
+								.then(() => {
+									window.location.reload();
+								});
+						}}
+					>
+						Delete Selected Item
+					</button>
 					<button
 						onClick={() => {
 							ClearItems();
