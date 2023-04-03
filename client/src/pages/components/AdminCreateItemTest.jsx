@@ -80,6 +80,25 @@ function AdminCreateItemTest() {
 			.then(() => {
 				window.location.reload();
 			});
+
+		await axios
+			.post("http://localhost:3001/api/GetCategories")
+			.then(async function (response) {
+				console.log(response.data);
+				for (let i = 0; i < selectedItem.categories.length; i++) {
+					let occurances = 0;
+					for (let j = 0; j < response.data.length; j++) {
+						if (selectedItem.categories[i] === response.data[j].cat) {
+							occurances++;
+						}
+					}
+					if (occurances < 1) {
+						await axios.post("http://localhost:3001/api/AddCategory", {
+							cat: selectedItem.categories[i],
+						});
+					}
+				}
+			});
 	}
 
 	return (
@@ -431,7 +450,25 @@ function AdminCreateItemTest() {
 							axios
 								.post("http://localhost:3001/api/UpdateItem", selectedItem)
 								.then(() => {
-									window.location.reload();
+									axios
+										.post("http://localhost:3001/api/GetCategories")
+										.then((response) => {
+											for (let i = 0; i < selectedItem.categories.length; i++) {
+												let occurances = 0;
+												for (let j = 0; j < response.length; j++) {
+													if (selectedItem.categories[i] === response[j]) {
+														occurances++;
+													}
+												}
+												if (occurances < 1) {
+													axios.post(
+														"http://localhost:3001/api/AddCategory",
+														selectedItem.categories[i]
+													);
+												}
+											}
+											window.location.reload();
+										});
 								});
 						}}
 					>

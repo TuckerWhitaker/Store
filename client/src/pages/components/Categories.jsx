@@ -1,66 +1,44 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "./Categories.css";
 
-function Categories() {
+function Categories(props) {
 	const [SelectedCategory, SetSelectedCategory] = useState("CatBtn" + 0);
-	const [CategoriesList, SetCategoriesList] = useState();
-
+	const [CategoriesList, SetCategoriesList] = useState([
+		"category",
+		"category",
+	]);
 	//Categories List map
+	useEffect(() => {
+		axios.post("http://localhost:3001/api/GetCategories").then((response) => {
+			console.log(response.data);
+			SetCategoriesList(response.data);
+		}, []);
+		console.log("P");
+	}, []);
 
 	return (
 		<div className="Categories">
-			<button
-				className="CatBtn"
-				id={"CatBtn" + 0}
-				onClick={() => {
-					document.getElementById(SelectedCategory).style.textDecoration =
-						"none";
-					document.getElementById("CatBtn" + 0).style.textDecoration =
-						"underline";
-					SetSelectedCategory("CatBtn" + 0);
-				}}
-			>
-				Category
-			</button>
-			<button
-				className="CatBtn"
-				id={"CatBtn" + 1}
-				onClick={() => {
-					document.getElementById(SelectedCategory).style.textDecoration =
-						"none";
-					document.getElementById("CatBtn" + 1).style.textDecoration =
-						"underline";
-					SetSelectedCategory("CatBtn" + 1);
-				}}
-			>
-				Category
-			</button>
-			<button
-				className="CatBtn"
-				id={"CatBtn" + 2}
-				onClick={() => {
-					document.getElementById(SelectedCategory).style.textDecoration =
-						"none";
-					document.getElementById("CatBtn" + 2).style.textDecoration =
-						"underline";
-					SetSelectedCategory("CatBtn" + 2);
-				}}
-			>
-				Category
-			</button>
-			<button
-				className="CatBtn"
-				id={"CatBtn" + 3}
-				onClick={() => {
-					document.getElementById(SelectedCategory).style.textDecoration =
-						"none";
-					document.getElementById("CatBtn" + 3).style.textDecoration =
-						"underline";
-					SetSelectedCategory("CatBtn" + 3);
-				}}
-			>
-				Category
-			</button>
+			{CategoriesList.map((info, index) => {
+				return (
+					<button
+						className="CatBtn"
+						key={"CatBtn" + index}
+						id={"CatBtn" + index}
+						onClick={() => {
+							document.getElementById(SelectedCategory).style.textDecoration =
+								"none";
+							document.getElementById("CatBtn" + index).style.textDecoration =
+								"underline";
+							SetSelectedCategory("CatBtn" + index);
+
+							props.refreshpage(info.cat);
+						}}
+					>
+						{info.cat}
+					</button>
+				);
+			})}
 		</div>
 	);
 }

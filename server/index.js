@@ -104,6 +104,22 @@ app.post("/api/GetItemsWithIds", async (req, res) => {
 	});
 });
 
+app.post("/api/GetItemsWithCategory", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		const items = await dbo.collection("items").find({
+			categories: req.body.Category,
+		});
+
+		var itemlist = [];
+		await items.forEach((element) => {
+			itemlist.push(element);
+		});
+
+		res.send(itemlist);
+	});
+});
+
 app.post("/api/GetItem", async (req, res) => {
 	MongoClient.connect(url, async function (err, db) {
 		var dbo = db.db("store");
@@ -147,6 +163,101 @@ app.post("/api/DeleteItem", async (req, res) => {
 		var dbo = db.db("store");
 		dbo.collection("items").deleteOne({ id: parseInt(req.body.id) });
 		res.send("success");
+	});
+});
+
+/*
+GetCategories
+Loop through all the items and check categories and make a list of them and send that list to the client.
+
+
+
+
+
+
+
+*/
+
+async function CullCategories() {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		let categories = dbo.collection("categories").find();
+		var catlist = [];
+		await categories.forEach((element) => {
+			catlist.push(element);
+		});
+		console.log("CATLIST:");
+		console.log(catlist);
+
+		//let uniqueChars = [...new Set(catlist)];
+		//catlist = uniqueChars;
+
+		const ItemCategories = dbo
+			.collection("items")
+			.find({}, { categories: 1, _id: 0 });
+
+		var categorieslist = [];
+		await ItemCategories.forEach((element) => {
+			categorieslist.push(element);
+		});
+		console.log("Categories");
+		console.log(categorieslist);
+		for (let i = 0; i < catlist.length; i++) {
+			let occurances = 0;
+			for (let j = 0; j < categorieslist.length; j++) {
+				console.log("P: ");
+				console.log(categorieslist[j].categories.length);
+
+				for (let k = 0; k < categorieslist[j].categories.length; k++) {
+					console.log(
+						catlist[i].cat + " :COMPARE: " + categorieslist[j].categories[k]
+					);
+					if (catlist[i].cat === categorieslist[j].categories[k]) {
+						console.log("Occurances++");
+						occurances++;
+					}
+				}
+			}
+			if (occurances < 1) {
+				dbo.collection("categories").deleteOne({ cat: catlist[i].cat });
+
+				console.log("category culled");
+				console.log(catlist[i].cat);
+			}
+			console.log("OCC FINISHED");
+		}
+	});
+}
+
+app.post("/api/GetCategories", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		var dbo = db.db("store");
+		const categories = dbo.collection("categories").find();
+
+		var catlist = [];
+		await categories.forEach((element) => {
+			catlist.push(element);
+		});
+		res.send(catlist);
+		console.log(catlist);
+	});
+});
+
+app.post("/api/AddCategory", async (req, res) => {
+	MongoClient.connect(url, async function (err, db) {
+		if (err) throw err;
+		var dbo = db.db("store");
+
+		var category = req.body;
+		console.log("req.body");
+		console.log(category);
+		dbo.collection("categories").insertOne(category, function (err, result) {
+			if (err) throw err;
+			console.log("1 document inserted");
+			CullCategories();
+			res.send("success");
+			db.close();
+		});
 	});
 });
 
