@@ -1,9 +1,9 @@
-import "./ItemPage.css";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ImageCarousel from "./imageCarousel";
+import "./ItemPage.css";
 
 function ItemPage(props) {
 	const [CustomTextArray, SetCustomTextArray] = useState([]);
@@ -55,12 +55,10 @@ function ItemPage(props) {
 				SetCustomTextList(response.data.customText);
 				SetImageId(response.data.imageNames[0]);
 
-				if (response.data.limitedTime) {
+				if (response.data.endDate) {
 					UpdateDate(response.data.endDate);
 				}
-				/*document.getElementById("Image").src =
-					"http://localhost:3001/api/getImage?id=" +
-					response.data.imageNames[0];*/
+
 				SetImageList(response.data.imageNames);
 			});
 	};
