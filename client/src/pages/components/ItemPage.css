@@ -11,6 +11,8 @@
 
 .ItemPageColumn {
 	margin-top: 3vh;
+	margin-left: 1vw;
+	margin-right: 1vw;
 	width: fit-content;
 	height: fit-content;
 	display: flex;
@@ -45,24 +47,26 @@
 .OptionParent {
 	margin-top: 20px;
 	border-style: solid;
-	border-color: rgb(174, 174, 174);
+	border-color: rgb(164, 133, 128);
 	border-radius: 5px;
 }
 
 .OptionContainer {
 	align-items: center;
-	display: flex;
-	width: 40vw;
-	height: 5vh;
-	padding-bottom: 1vh;
-	background-color: rgb(212, 212, 212);
-	overflow-x: scroll;
-	overflow-y: hidden;
+	display: grid;
+	grid-template-columns: auto auto auto;
+	width: fit-content;
+	height: fit-content;
+	padding-bottom: 1.5vh;
+	background-color: #c49c94;
+
+	overflow-wrap: break-word;
 }
 
 .OptionName {
-	background-color: rgb(212, 212, 212);
+	background-color: #c49c94;
 	font-size: large;
+	color: white;
 }
 
 .OptionValue {
@@ -70,8 +74,9 @@
 	text-align: center;
 	padding: 3px;
 	border-radius: 5px;
-	min-width: 10vw;
-	background-color: #979696;
+	min-width: 5vw;
+	background-color: #decac5;
+	color: rgb(0, 0, 0);
 	width: fit-content;
 	height: fit-content;
 	margin: 5px;
@@ -123,7 +128,7 @@
 .CustomTextListInputIN {
 	font-size: 2.5vh;
 	height: 3vh;
-	width: 30vw;
+	width: 20vw;
 }
 
 @media only screen and (max-width: 750px) {
