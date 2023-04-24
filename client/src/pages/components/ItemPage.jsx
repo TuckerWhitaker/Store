@@ -2,8 +2,8 @@ import axios, { Axios } from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ImageCarousel from "./imageCarousel";
 import "./ItemPage.css";
+import ImageCarousel from "./imageCarousel";
 
 function ItemPage(props) {
 	const [CustomTextArray, SetCustomTextArray] = useState([]);
@@ -160,7 +160,7 @@ function ItemPage(props) {
 													if (SelectedOptionID !== 0) {
 														document.getElementById(
 															SelectedOptionID
-														).style.backgroundColor = "#979696";
+														).style.backgroundColor = "#decac5";
 													}
 													SelectedOptions[index] = info2;
 													SetSelectedOptions(SelectedOptions);
