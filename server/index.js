@@ -1,4 +1,5 @@
 const bodyParser = require("body-parser");
+require("dotenv").config();
 const cors = require("cors");
 var http = require("http");
 const express = require("express");
@@ -13,6 +14,7 @@ const storage = multer.diskStorage({
 		//cb(null, Date.now() + ".png");
 	},
 });
+const stripe = require("stripe")(process.env.SecretKey);
 
 const upload = multer({ storage: storage });
 const morgan = require("morgan");
@@ -46,6 +48,30 @@ app.post("/api/uploadImage", upload.single("file"), (req, res) => {
 app.get("/api/getImage", (req, res) => {
 	console.log(req.query);
 	res.sendFile("F:/WebDev/Store/server/uploads/" + req.query.id + ".png");
+});
+
+const calculateOrderAmount = (items) => {
+	// Replace this constant with a calculation of the order's amount
+	// Calculate the order total on the server to prevent
+	// people from directly manipulating the amount on the client
+	return 1400;
+};
+
+app.post("/create-payment-intent", async (req, res) => {
+	const { items } = req.body;
+
+	// Create a PaymentIntent with the order amount and currency
+	const paymentIntent = await stripe.paymentIntents.create({
+		amount: calculateOrderAmount(items),
+		currency: "usd",
+		automatic_payment_methods: {
+			enabled: true,
+		},
+	});
+
+	res.send({
+		clientSecret: paymentIntent.client_secret,
+	});
 });
 
 app.post("/api/CreateItem", async (req, res) => {

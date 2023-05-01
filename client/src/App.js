@@ -11,6 +11,7 @@ import AdminCreateItem from "./pages/components/AdminCreateItem";
 import AdminOrder from "./pages/components/AdminOrder";
 import AdminPage from "./pages/components/AdminPage";
 import CartPage from "./pages/components/CartPage";
+import Checkout from "./pages/components/Checkout";
 import ContactPage from "./pages/components/ContactPage";
 import ItemPage from "./pages/components/ItemPage";
 
@@ -27,6 +28,7 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Main />} />
+					<Route path="/Checkout" element={<Checkout />} />
 					<Route path="/Cart" element={<CartPage />} />
 					<Route path="/Contact" element={<ContactPage />} />
 					<Route path="/Admin" element={<AdminPage />} />
