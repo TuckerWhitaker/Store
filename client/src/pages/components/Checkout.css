@@ -1,3 +1,10 @@
+.Checkout {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 90vh;
+}
+
 form {
 	width: 30vw;
 	min-width: 500px;

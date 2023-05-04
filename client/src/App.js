@@ -14,6 +14,7 @@ import CartPage from "./pages/components/CartPage";
 import Checkout from "./pages/components/Checkout";
 import ContactPage from "./pages/components/ContactPage";
 import ItemPage from "./pages/components/ItemPage";
+import PaymentComplete from "./pages/components/PaymentComplete";
 
 function App() {
 	return (
@@ -31,6 +32,7 @@ function App() {
 					<Route path="/Checkout" element={<Checkout />} />
 					<Route path="/Cart" element={<CartPage />} />
 					<Route path="/Contact" element={<ContactPage />} />
+					<Route path="/OrderComplete" element={<PaymentComplete />} />
 					<Route path="/Admin" element={<AdminPage />} />
 					<Route path="/Admin/CreateItem" element={<AdminCreateItem />} />
 					<Route path="/Admin/ManageOrders" element={<AdminOrder />} />

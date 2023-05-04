@@ -15,12 +15,30 @@ const stripePromise = loadStripe(
 export default function Checkout() {
 	const [clientSecret, setClientSecret] = useState("");
 
+	let orderIDS = [];
+
 	useEffect(() => {
+		if (JSON.parse(localStorage.getItem("Cart")) === null) {
+			console.log("CART IS NULL");
+		} else {
+			console.log("CART NOT NULL");
+
+			let OrderArray = JSON.parse(localStorage.getItem("Cart"));
+			console.log(OrderArray);
+			for (let i = 0; i < OrderArray.length; i++) {
+				console.log(OrderArray[i]);
+				orderIDS.push(OrderArray[i].id);
+			}
+		}
+		console.log(orderIDS);
+
 		// Create PaymentIntent as soon as the page loads
 		fetch("http://localhost:3001/create-payment-intent", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+			body: JSON.stringify({
+				items: [orderIDS],
+			}),
 		})
 			.then((res) => res.json())
 			.then((data) => setClientSecret(data.clientSecret));

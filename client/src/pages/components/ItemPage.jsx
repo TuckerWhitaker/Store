@@ -49,6 +49,7 @@ function ItemPage(props) {
 			.post("http://localhost:3001/api/GetItem", { id: ItemId })
 			.then((response) => {
 				console.log(response);
+
 				SetItemName(response.data.name);
 				SetItemPrice(response.data.price);
 				SetOptionList(response.data.options);
@@ -86,6 +87,7 @@ function ItemPage(props) {
 					id="OrderButton"
 					onClick={() => {
 						let order = {
+							id: Number(ItemId),
 							ItemName: ItemName,
 							ItemPrice: ItemPrice,
 							CustomTextArray: [],

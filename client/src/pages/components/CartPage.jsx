@@ -1,7 +1,7 @@
-import "./CartPage.css";
-import React, { useState, useEffect, useContext } from "react";
-import Cookies from "js-cookie";
 import axios from "axios";
+import Cookies from "js-cookie";
+import React, { useContext, useEffect, useState } from "react";
+import "./CartPage.css";
 
 function CartPage() {
 	const [, updateState] = React.useState();
@@ -55,6 +55,7 @@ function CartPage() {
 				<button
 					className="OrderBtn"
 					onClick={() => {
+						/*
 						axios
 							.post("http://localhost:3001/api/OrderItem", {
 								OrderArray: OrderArray,
@@ -67,6 +68,8 @@ function CartPage() {
 									alert("Fail");
 								}
 							});
+							*/
+						window.location.href = "http://localhost:3000/Checkout";
 					}}
 				>
 					Proceed to Checkout

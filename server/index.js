@@ -50,19 +50,32 @@ app.get("/api/getImage", (req, res) => {
 	res.sendFile("F:/WebDev/Store/server/uploads/" + req.query.id + ".png");
 });
 
-const calculateOrderAmount = (items) => {
-	// Replace this constant with a calculation of the order's amount
-	// Calculate the order total on the server to prevent
-	// people from directly manipulating the amount on the client
-	return 1400;
-};
+async function calculateOrderAmount(itemList) {
+	try {
+		itemList = itemList[0];
+		console.log(itemList[0]);
+		const db = await MongoClient.connect(url);
+		const dbo = db.db("store");
+		const items = await dbo
+			.collection("items")
+			.find({ id: { $in: itemList } })
+			.toArray();
+		const totalPrice = items.reduce((acc, item) => acc + Number(item.price), 0);
+		console.log(totalPrice);
+		return Math.round(totalPrice * 100);
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+}
 
 app.post("/create-payment-intent", async (req, res) => {
 	const { items } = req.body;
+	console.log(items[0]);
 
 	// Create a PaymentIntent with the order amount and currency
 	const paymentIntent = await stripe.paymentIntents.create({
-		amount: calculateOrderAmount(items),
+		amount: await calculateOrderAmount(items),
 		currency: "usd",
 		automatic_payment_methods: {
 			enabled: true,
