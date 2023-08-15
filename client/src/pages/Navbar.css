@@ -4,7 +4,7 @@
 	background-color: #c49c94;
 	display: flex;
 	align-items: baseline;
-	justify-content: space-evenly;
+	justify-content: center;
 }
 
 .NavBarButton {

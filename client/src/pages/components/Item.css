@@ -1,18 +1,19 @@
 .Item {
+	background-color: rgba(255, 255, 255, 0.199);
 	margin: 2vw;
+	padding: 2%;
 	width: fit-content;
 	height: fit-content;
 }
 
 .Item:hover {
 	cursor: pointer;
+	background-color: rgb(179, 179, 179);
 }
 
 .ItemImage {
 	width: 20vh;
-	border-style: solid;
-	border-radius: 2vw;
-	border-color: gray;
+	height: 20vh;
 }
 
 @media only screen and (max-width: 800px) {
